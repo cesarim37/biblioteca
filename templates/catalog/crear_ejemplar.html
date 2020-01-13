@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+Nuevo Ejemplar
+{% endblock %}
+
+{% block content %}
+
+<form method="POST">
+  {% csrf_token %}
+  {% if error %}
+  <h2>{{ error }}</h2>
+  {% else %}
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro Ejemplar</strong>
+    </div>
+    <div class="card-body card-block">
+      <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+        
+        <div class="row form-group">
+          <div class="col col-md-3">{{ form.libro.label }}</div>
+          <div class="col-12 col-md-9">{{ form.libro }}</div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">{{ form.cota.label }}</div>
+          <div class="col-12 col-md-9">{{ form.cota }}</div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">{{ form.condicion.label }}</div>
+          <div class="col-12 col-md-9">{{ form.condicion }}</div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">{{ form.adquirido.label }}</div>
+          <div class="col-12 col-md-9">{{ form.adquirido }}</div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col col-md-3">{{ form.estado.label }}</div>
+          <div class="col-12 col-md-9">{{ form.estado }}</div>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="reset" class="btn btn-danger">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+</form>
+
+{% endblock %}

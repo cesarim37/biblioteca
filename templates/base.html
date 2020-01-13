@@ -1,0 +1,137 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+    <link rel="stylesheet" type="text/css" href="{% static 'dist_lib/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'dist_lib/fontawesome/css/all.min.css' %}">
+
+    <title>{% block titulo %}{% endblock %}</title>
+    
+    <style type="">
+      .logo {
+        margin-left: 44%;
+      }
+      
+      .login-active {
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+      }
+      .login-active img{
+        border-radius: 50%;
+        vertical-align: middle;        
+        object-fit: cover;
+        width: 45px;
+        height: 45px;
+        margin-right: 5px;
+      }
+    </style>
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a href="{% url 'catalog:home' %}">
+        <img src="{% static 'assets/images/mpppe.png' %}" alt="Logo AAM" style="height:45px;" class="d-lg-none" >
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav logo">
+          <li>
+            <a href="{% url 'catalog:home' %}">
+              <img src="{% static 'assets/images/mpppe.png' %}" alt="Logo AAM" style="height:45px;" class="d-none d-lg-block" >              
+            </a>
+          </li>
+        </ul>
+
+        {% if request.user.is_authenticated %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="fa fa-gear"></span></a>
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Mi Perfil</a>
+                <a class="dropdown-item" href="#">Salir</a>
+              </div>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link login-active" href="#">
+                  {% if request.user.profile_user.picture %}
+                    <img src="{{ request.user.profile_user.picture.url }}" width="35" height="35">
+                  {% else %}
+                    <img src="{% static 'assets/images/perfil.png' %}" width="35" height="35">
+                  {% endif %}
+                  <span> <small> Hola! </small> <br> {{request.user.first_name|upper|default:"Tu Nombre"}} </span>
+              </a>
+            </li>          
+          </ul>
+        
+        {% else %}
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Iniciar Sesion</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Registrarse</a>
+            </li>          
+          </ul>
+        {% endif %}
+      
+      </div>
+    </nav>
+
+    <ul class="nav navbar-nav">
+      <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Autores</a>
+        <ul class="sub-menu children dropdown-menu">
+          <li><a href="{% url 'catalog:crear_autor' %}">Registrar Autor</a></li>
+          <li><a href="{% url 'catalog:listar_autor' %}">Listado de Autores</a></li>
+        </ul>
+      </li>
+      <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Libros</a>
+        <ul class="sub-menu children dropdown-menu">
+          <li><a href="{% url 'catalog:crear_libro' %}">Registrar Libro</a></li>
+          <li><a href="{% url 'catalog:listar_libros' %}">Listado de Libros</a></li>
+        </ul>
+      </li>
+      <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios</a>
+        <ul class="sub-menu children dropdown-menu">
+          <li><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
+          <li><a href="{% url 'account:crear_estudiante' %}">Registrar Estudiante</a></li>
+          <li><a href="{% url 'account:crear_personal' %}">Registrar Personal</a></li>
+          <li><a href="{% url 'account:crear_visitante' %}">Registrar Visitante</a></li>
+          <li><a href="{% url 'account:crear_bibliotecario' %}">Registrar Bibliotecario</a></li>
+        </ul>
+      </li>
+      <li class="menu-item-has-children dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Prestamos</a>
+        <ul class="sub-menu children dropdown-menu">
+          <li><a href="{% url 'loan:crear_prestamo' %}">Registrar Prestamo</a></li>
+          <li><a href="#">Historial de Prestamos</a></li>
+        </ul>
+      </li>
+    </ul>
+    
+    <div class="main container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <script src="{% static 'dist_lib/bootstrap/js/jquery-3.3.1.slim.min.js' %}"></script>
+    <script src="{% static 'dist_lib/bootstrap/js/popper.min.js' %}"></script>
+    <script src="{% static 'dist_lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>

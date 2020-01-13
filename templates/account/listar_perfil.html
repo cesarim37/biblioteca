@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+  Listado de Perfiles
+{% endblock %}
+
+{% block content %}
+
+  {% if perfiles %}
+      <div class="card">
+          <div class="card-header">
+              <strong class="card-title">Listado de Perfiles</strong>
+          </div>
+          <div class="table-stats order-table ov-h">
+              <table class="table">
+                  <thead>
+                      <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Cedula</th>
+                        <th>Tipo de usuario</th>
+                        <th>Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    {% for perfil in perfiles %}
+                      <tr>
+                        <td>{{ perfil.usuario.first_name }}</td>
+                        <td>{{ perfil.usuario.last_name }}</td>
+                        <td>{{ perfil.cedula_identidad }}</td>
+                        <td>{{ perfil.tipo_usuario }}</td>
+                        <td>
+                          <a href="#" class="btn btn-primary">Editar</a>
+                          <a href="#" class="btn btn-danger">Eliminar</a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+          
+      </div>
+      {% else %}
+        <h1>No existen perfiles registrados</h1>
+      {% endif %}
+
+{% endblock %}
