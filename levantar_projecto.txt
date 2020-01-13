@@ -1,0 +1,28 @@
+Descargado el sistema, ubiacarlo en un direcctorio principal (SisBiblioteca)
+
+SisBiblioteca
+    biblioteca
+
+1) Dentro del directorio principal SisBiblioteca que va a contener el projecto: Crear un entorno virtual con python 3.7
+-> ...\SisBiblioteca> py -m venv env
+
+SisBiblioteca
+    biblioteca
+    env
+
+2) Activar el entorno virtual
+-> ...\SisBiblioteca> env/Scripts/activate
+
+3) Ir dentro del directorio biblioteca a instalar requerimientos
+-> ...\SisBiblioteca\biblioteca> pip install -r requirements.txt
+
+4) Crear base de datos
+-> ...\SisBiblioteca\biblioteca> python manage.py migrate
+
+5) Crear super usuario
+-> ...\SisBiblioteca\biblioteca> python manage.py createsuperuser
+
+6) Levantar servidor local
+-> ...\SisBiblioteca\biblioteca> python manage.py runserver
+
+7) Para acceder al admin ir a http://localhost:8000/admin y logearse con los datos del super usuario!
