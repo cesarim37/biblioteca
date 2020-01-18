@@ -1,0 +1,236 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Registro Libros</title>
+  <meta name="description" content="Ela Admin - HTML5 Admin Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/normalize.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/bootstrap.min.css' %}">
+  
+  <link rel="stylesheet" href="{% static 'dist_lib/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/pe-icon-7-stroke.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/flag-icon.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/chosen/chosen.min.css' %}">
+
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+  
+</head>
+<body>
+  <!-- Left Panel -->
+
+  <aside id="left-panel" class="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+
+      <div id="main-menu" class="main-menu collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#"><i class="menu-icon fa fa-desktop"></i>Inicio</a>
+          </li>
+          <li class="menu-title">Biblioteca</li><!-- /.menu-title -->
+          <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Libros</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-pencil"></i><a href="#">Registrar Libro</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="#">Listado de Libros</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-font"></i>Autores</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-pencil"></i><a href="#">Registrar Autor</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="#">Listado de Autores</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-pencil"></i><a href="#">Registrar Usuarios</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="#">Listado de Usuarios</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+  </aside><!-- /#left-panel -->
+  <!-- Left Panel -->
+
+
+  <!-- Right Panel -->
+  <div id="right-panel" class="right-panel">
+
+    <!-- Header-->
+    <header id="header" class="header">
+      <div class="top-left">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="./"><img src="{% static 'images/logo.png' %}" alt="Logo"></a>
+          <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
+        </div>
+      </div>
+      <div class="top-right">
+        <div class="header-menu">
+          <div class="header-left">
+            <div class="user-area dropdown float-right">
+              <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="user-avatar rounded-circle" src="{% static 'images/perfil.png' %}" alt="User Avatar">
+              </a>
+
+              <div class="user-menu dropdown-menu">
+                <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
+
+                <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
+
+                <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+    </header><!-- /header -->
+    <!-- Header-->
+
+    <div class="breadcrumbs">
+      <div class="breadcrumbs-inner">
+        <div class="row m-0">
+          <div class="col-sm-4">
+            <div class="page-header float-left">
+              <div class="page-title">
+                <h1>Registro de Libros</h1>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <div class="page-header float-right">
+              <div class="page-title">
+                <ol class="breadcrumb text-right">
+                  <li><a href="#">Inicio</a></li>
+                  <li><a href="#">Libros</a></li>
+                  <li class="active">Registro</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="animated fadeIn">
+        
+        
+        <div class="row">
+
+          <div class="col-xs-12 offset-sm-3 col-sm-6">
+            <div class="card">
+              <div class="card-header">
+                <strong>Formulario de Registro</strong>
+              </div>
+              <div class="card-body card-block">
+                
+                <div class="form-group">
+                  <label class=" form-control-label">Título del Libro</label>
+                  <div class="input-group">
+                    <input class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class=" form-control-label">Portada</label>
+                  <div class="input-group">
+                    <div class="custom-file">
+                      <input type="file" class="custom-file-input" id="customFileLang" lang="es" name="picture">
+                      <label class="custom-file-label" for="customFileLang" data-browse="Elegir">Seleccionar Archivo</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class=" form-control-label">Autor</label>
+                  <div class="input-group">
+                    <select data-placeholder="Selecciona autor o autores..." multiple class="standardSelect">
+                      <option value="" label="default"></option>
+                      <option value="Autor1">Autor1</option>
+                      <option value="Autor2">Autor2</option>
+                      <option value="Autor3">Autor3</option>
+                    </select>
+                  </div>
+                  <small class="form-text text-muted">Agregar autor</small>
+                </div>
+
+                <div class="form-group">
+                  <label class=" form-control-label">Editorial</label>
+                  <div class="input-group">
+                    <select data-placeholder="Selecciona editorial..." class="standardSelect" tabindex="1">
+                      <option value="" label="default"></option>
+                      <option value="Editorial1">Editorial1</option>
+                      <option value="Editorial2">Editorial2</option>
+                      <option value="Editorial3">Editorial3</option>
+                    </select>
+                  </div>
+                  <small class="form-text text-muted">Agregar editorial</small>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- .animated -->
+    </div><!-- .content -->
+    <div class="clearfix"></div>
+
+    <footer class="site-footer">
+      <div class="footer-inner bg-white">
+        <div class="row">
+          <div class="col-sm-6">
+            Sistema Bibliotecario, 2020
+          </div>
+          <div class="col-sm-6 text-right">
+            Desarrollado por:
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+  </div><!-- /#right-panel -->
+
+  <!-- Right Panel -->
+
+  <!-- Scripts -->
+  <script src="{% static 'assets/js/dist_lib/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/jquery.matchHeight.min.js' %}"></script>
+  
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+  <script src="{% static 'assets/js/dist_lib/chosen/chosen.jquery.min.js' %}"></script>
+  <script>
+    jQuery(document).ready(function() {
+      jQuery(".standardSelect").chosen({
+        disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+      });
+    });
+  </script>
+
+  <script src="{% static 'assets/js/bs-custom-file-input.min.js' %}"></script>
+  <script type="text/javascript">
+    
+    jQuery(document).ready(function(){
+      bsCustomFileInput.init()
+    });
+
+  </script>
+</body>
+</html>

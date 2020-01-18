@@ -4,7 +4,8 @@ from django.urls import reverse_lazy
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView, FormView
 
 from account.forms import EstudianteForm, PersonalForm, VisitanteForm, BibliotecarioForm
-from account.models import Perfil
+from account.models import Perfil, Estudiante
+
 
 class CrearEstudianteView(FormView):
     """Users sign up view."""
@@ -17,6 +18,13 @@ class CrearEstudianteView(FormView):
         """Save form data."""
         form.save()
         return super().form_valid(form)
+
+
+# class ActualizarEstudianteView(UpdateView):
+#     model = Estudiante
+#     form_class = EstudianteForm
+#     template_name = 'account/crear_estudiante.html'
+#     success_url = reverse_lazy('account:listar_perfil')
 
 
 class CrearPersonalView(FormView):
@@ -63,3 +71,7 @@ class ListadoPerfilView(ListView):
     template_name = 'account/listar_perfil.html'
     context_object_name = 'perfiles'
     queryset = Perfil.objects.filter(status=True)
+
+
+class PerfilDetailView(DetailView):
+    model = Perfil

@@ -14,4 +14,16 @@ urlpatterns = [
         name='crear_prestamo'
     ),
 
+    path(
+        route='nuevo_prestamo/<int:pk>/<slug:slug>/',
+        view=views.NuevoPrestamoView.as_view(),
+        name='nuevo_prestamo'
+    ),
+
+    path(
+        route='listar_prestamos/',
+        view=views.ListadoPrestamoView.as_view(),
+        name='listar_prestamos'
+    ),
+
 ]

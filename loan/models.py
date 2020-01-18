@@ -36,4 +36,3 @@ class Prestamo(ModeloBase):
 
     def __str__(self):
         return '%s, %s' % (self.ejemplar, self.lector)
-

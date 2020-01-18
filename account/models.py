@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.template.defaultfilters import slugify
 
 from catalog.models import EjemplarLibro
 
@@ -27,6 +28,10 @@ class Perfil(models.Model):
 
     def __str__(self):
         return self.usuario.username
+
+    @property
+    def slug(self):
+        return slugify(self.cedula_identidad)
     
 
 class Bibliotecario(models.Model):

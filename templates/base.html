@@ -37,7 +37,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light">
       <a href="{% url 'catalog:home' %}">
-        <img src="{% static 'assets/images/mpppe.png' %}" alt="Logo AAM" style="height:45px;" class="d-lg-none" >
+        <img src="{% static 'images/mpppe.png' %}" alt="Logo AAM" style="height:45px;" class="d-lg-none" >
       </a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
         <ul class="navbar-nav logo">
           <li>
             <a href="{% url 'catalog:home' %}">
-              <img src="{% static 'assets/images/mpppe.png' %}" alt="Logo AAM" style="height:45px;" class="d-none d-lg-block" >              
+              <img src="{% static 'images/mpppe.png' %}" alt="Logo" style="height:45px;" class="d-none d-lg-block" >              
             </a>
           </li>
         </ul>
@@ -70,7 +70,7 @@
                   {% if request.user.profile_user.picture %}
                     <img src="{{ request.user.profile_user.picture.url }}" width="35" height="35">
                   {% else %}
-                    <img src="{% static 'assets/images/perfil.png' %}" width="35" height="35">
+                    <img src="{% static 'images/perfil.png' %}" width="35" height="35">
                   {% endif %}
                   <span> <small> Hola! </small> <br> {{request.user.first_name|upper|default:"Tu Nombre"}} </span>
               </a>
@@ -120,7 +120,7 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Prestamos</a>
         <ul class="sub-menu children dropdown-menu">
           <li><a href="{% url 'loan:crear_prestamo' %}">Registrar Prestamo</a></li>
-          <li><a href="#">Historial de Prestamos</a></li>
+          <li><a href="{% url 'loan:listar_prestamos' %}">Historial de Prestamos</a></li>
         </ul>
       </li>
     </ul>

@@ -292,6 +292,26 @@ class BibliotecarioForm(forms.Form):
         required=True
     )
 
+    email = forms.CharField(
+        label='E-mail',
+        min_length=6,
+        max_length=70,
+        widget=forms.EmailInput(),
+        required=True
+    )
+    password = forms.CharField(
+        label='Contraseña',
+        max_length=70,
+        widget=forms.PasswordInput(),
+        required=True
+    )
+    password_confirmation = forms.CharField(
+        label='Confirmar contraseña',
+        max_length=70,
+        widget=forms.PasswordInput(),
+        required=True
+    )
+
     imagen = forms.ImageField(
         label='Imagen de Perfil',
         required=False
@@ -323,7 +343,29 @@ class BibliotecarioForm(forms.Form):
 
         if cedula_existente:
             raise forms.ValidationError('Tu cedula se encuentra registrada. Verifica los datos')
+
+        password = data['password']
+        password_confirmation = data['password_confirmation']
+
+        if password != password_confirmation:
+            raise forms.ValidationError('La contraseña no coincide')
+
+        print('------------')
+        print('paso contraseña!!')
+        print('------------')
         return data
+
+
+    def clean_email(self):
+        """Email must be unique."""
+        email = self.cleaned_data['email']
+        email_taken = User.objects.filter(email=email).exists()
+        if email_taken:
+            raise forms.ValidationError('El email ya se esta en uso. Prueba otro!')
+        print('------------')
+        print('paso!!')
+        print('------------')
+        return email
 
 
     def save(self):
@@ -334,14 +376,18 @@ class BibliotecarioForm(forms.Form):
         first_name = data['first_name']
         last_name = data['last_name']
         cedula_identidad = data['cedula_identidad']
+        email = data['email']
+        password = data['password']
         imagen = data['imagen']
         direccion = data['direccion']
         telefono = data['telefono']
         
         user = User.objects.create_user(
             username=cedula_identidad,
+            password=password,
             first_name=first_name,
-            last_name=last_name
+            last_name=last_name,
+            email=email
         )
 
         perfil = Perfil(

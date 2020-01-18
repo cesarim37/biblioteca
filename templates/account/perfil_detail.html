@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Biblioteca | Detalle de Libros
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<p>{{ object.usuario.first_name }}</p>
+<p>{{ object.usuario.last_name }}</p>
+<p>{{ object.tipo_usuario }}</p>
+<p>{{ object.cedula_identidad }}</p>
+
+
+{% if object.prestamo_user.all %}
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">historial de usuario</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ejemplar</th>
+          <th>tipo_prestamo</th>
+          <th>fecha_prestamo</th>
+          <th>fecha_devolucion</th>
+          <th>fecha_devuelto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prestamo in object.prestamo_user.all %}
+          {% if not prestamo.fecha_devuelto %}
+            <tr>
+              <td>{{ prestamo.ejemplar }}</td>
+              <td>{{ prestamo.tipo_prestamo }}</td>
+              <td>{{ prestamo.fecha_prestamo }}</td>
+              <td>{{ prestamo.fecha_devolucion }}</td>
+              <td>Pendiente</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% else %}
+<h6>No existen prestamos registrados</h6>
+{% endif %}
+
+<a href="{% url 'loan:crear_prestamo' %}" class="btn btn-primary">Agregar prestamo</a>
+
+{% endblock %}

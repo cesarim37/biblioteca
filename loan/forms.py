@@ -20,3 +20,18 @@ class PrestamoForm(forms.ModelForm):
             'fecha_prestamo',
             'fecha_devolucion',
         )
+
+
+class NuevoPrestamoForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Prestamo
+        fields = (
+            'ejemplar',
+            'tipo_prestamo',
+            'fecha_prestamo',
+            'fecha_devolucion',
+        )
+
+

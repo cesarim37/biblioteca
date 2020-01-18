@@ -22,9 +22,11 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    
     path('', include(('catalog.urls', 'catalog'), namespace='catalog')),
     path('', include(('account.urls', 'account'), namespace='account')),
     path('', include(('loan.urls', 'loan'), namespace='loan')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('accounts/', include('django.contrib.auth.urls')),
 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

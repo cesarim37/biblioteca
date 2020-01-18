@@ -27,7 +27,7 @@
                       <tr>
                         <td>{{ perfil.usuario.first_name }}</td>
                         <td>{{ perfil.usuario.last_name }}</td>
-                        <td>{{ perfil.cedula_identidad }}</td>
+                        <td> <a href="{% url 'account:perfil_detail' slug=perfil.slug pk=perfil.pk %}">{{ perfil.cedula_identidad }}</a> </td>
                         <td>{{ perfil.tipo_usuario }}</td>
                         <td>
                           <a href="#" class="btn btn-primary">Editar</a>

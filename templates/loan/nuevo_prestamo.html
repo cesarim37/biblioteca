@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+<title>Nuevo Prestamo</title>
+{% endblock %}
+
+{% block content %}
+
+Nuevo prestamo
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    {{ prestamo_form.as_p }}
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+
+</form>
+
+{% endblock %}

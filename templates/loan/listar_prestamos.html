@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+Listado de prestamos
+{% endblock %}
+
+{% block content %}
+
+{% if prestamos %}
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title">Historial de Prestamos</strong>
+  </div>
+  <div class="table-stats order-table ov-h">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>bibliotecario</th>
+          <th>ejemplar</th>
+          <th>lector</th>
+          <th>tipo de prestamo</th>
+          <th>fecha de prestamo</th>
+          <th>fecha de devolucion</th>
+          <th>fecha devuelto</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prestamo in prestamos %}
+        <tr>
+          <td>{{ prestamo.bibliotecario }}</td>
+          <td>{{ prestamo.ejemplar.cota }}</td>
+          <td>{{ prestamo.lector }}</td>
+          <td>{{ prestamo.tipo_prestamo }}</td>
+          <td>{{ prestamo.fecha_prestamo }}</td>
+          <td>{{ prestamo.fecha_devolucion }}</td>
+          <td>{{ prestamo.fecha_devuelto }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% else %}
+<h1>No existen prestamos registrados</h1>
+{% endif %}
+
+{% endblock %}
