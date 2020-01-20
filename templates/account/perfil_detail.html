@@ -15,6 +15,7 @@ Biblioteca | Detalle de Libros
 <p>{{ object.cedula_identidad }}</p>
 
 
+
 {% if object.prestamo_user.all %}
 <div class="card">
   <div class="card-header">
@@ -51,6 +52,6 @@ Biblioteca | Detalle de Libros
 <h6>No existen prestamos registrados</h6>
 {% endif %}
 
-<a href="{% url 'loan:crear_prestamo' %}" class="btn btn-primary">Agregar prestamo</a>
+<a href="{% url 'loan:nuevo_prestamo' pk=object.pk slug=object.slug %}" class="btn btn-primary">Agregar prestamo</a>
 
 {% endblock %}

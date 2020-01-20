@@ -128,4 +128,4 @@ class EjemplarLibro(ModeloBase):
         verbose_name_plural='Ejemplares'
 
     def __str__(self):
-        return '%s, ejemplar: %s' % (self.libro.titulo, self.pk)
+        return '%s, ejemplar: %s' % (self.libro.titulo, self.cota)

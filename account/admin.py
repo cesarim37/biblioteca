@@ -4,7 +4,6 @@ from .models import *
 
 class PerfilAdmin(admin.ModelAdmin):
     list_display = ('usuario', 'tipo_usuario', 'cedula_identidad')
-    filter_horizontal = ('libros',)
 
 
 admin.site.register(Perfil, PerfilAdmin)

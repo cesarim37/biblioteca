@@ -21,7 +21,7 @@ class Prestamo(ModeloBase):
 
     TIPO_PRESTAMO = (
         ('aula', 'Aula'),
-        ('Sala', 'Sala'),
+        ('sala', 'Sala'),
         ('hogar', 'Hogar'),
     )
     tipo_prestamo = models.CharField(max_length=20, choices=TIPO_PRESTAMO, blank=True, default='sala', help_text='Tipo de Prestamo')
