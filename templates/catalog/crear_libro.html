@@ -1,22 +1,102 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
+{% load static %}
 
 {% block titulo %}
-<title>Nuevo Libro</title>
+Nuevo Libro
+{% endblock %}
+
+{% block css %}
+  <style type="text/css">
+
+    .custom-file-label:after{
+      content: "Elegir";
+    }
+
+  </style>
 {% endblock %}
 
 {% block content %}
 
-crear libro
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body card-block">
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-    {{ form.as_p }}
+        <div class="form-group">
+          <label for="id_titulo" class="form-control-label"> {{ form.titulo.label }} </label>
+          <div class="input-group">
+            {{ form.titulo }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="id_portada" class="form-control-label"> {{ form.portada.label }} </label>
+          <div class="input-group">
+            <div class="custom-file">
+              {{ form.portada }}
+              <label class="custom-file-label" for="id_portada">Seleccionar Archivo</label>
+            </div>
+          </div>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Registrar</button>
-    <button type="reset" class="btn btn-danger">Cancelar</button>
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.autor.label }} </label>
+          {{ form.autor }}
+          <a href="{% url 'catalog:crear_autor' %}" target="_blank"><small class="form-text text-muted">Agregar autor</small></a>
+          <a href="javascript:window.open('{% url 'catalog:nuevo_autor' %}','','toolbar=yes');void 0"><small class="form-text text-muted">Agregar autor2</small></a>
 
+        </div>
+        
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.editorial.label }} </label>
+          {{ form.editorial }}
+          <small class="form-text text-muted">Agregar editorial</small>
+        </div>
 
-</form>
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.categoria.label }} </label>
+          {{ form.categoria }}
+          <small class="form-text text-muted"> {{ form.categoria.help_text }} </small>
+        </div>
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.ubicacion.label }} </label>
+          {{ form.ubicacion }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <button type="reset" class="btn btn-danger">Cancelar</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'assets/js/dist_lib/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bs-custom-file-input.min.js' %}"></script>
+
+<script>
+
+jQuery(document).ready(function() {
+  jQuery(".standardSelect").chosen({
+    disable_search_threshold: 10,
+    no_results_text: "Oops, nothing found!",
+    width: "100%"
+  });
+});
+
+jQuery(document).ready(function(){
+  bsCustomFileInput.init()
+});
+
+</script>
 
 {% endblock %}

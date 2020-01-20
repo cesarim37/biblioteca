@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <meta name="description" content="Ela Admin - HTML5 Admin Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/normalize.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/bootstrap.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'dist_lib/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/pe-icon-7-stroke.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/flag-icon.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/chosen/chosen.min.css' %}">
+
+
+  <title>
+    Nuevo Autor
+  </title>
+
+  <style type="text/css">
+  </style>
+</head>
+
+<form method="POST" id="form">
+  {% csrf_token %}
+  {% if error %}
+  <h2>{{ error }}</h2>
+  {% else %}
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body card-block">
+      <form action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+
+        <div class="row form-group">
+          <div class="col col-md-3">{{ autor_form.nombre.label }}</div>
+          <div class="col-12 col-md-9">{{ autor_form.nombre }}</div>
+        </div>
+        <div class="row form-group">
+          <div class="col col-md-3">{{ autor_form.apellido.label }}</div>
+          <div class="col-12 col-md-9">{{ autor_form.apellido }}</div>
+        </div>
+
+        <div class="text-center">
+          
+          <button type="submit" class="btn btn-primary">Registrar</button>
+          <button type="reset" class="btn btn-danger">Cancelar</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+</form>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/dist_lib/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/jquery.matchHeight.min.js' %}"></script>
+
+<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>
+
+

@@ -11,12 +11,11 @@ class EjemplarLibroInline(admin.StackedInline):
 class LibroAdmin(admin.ModelAdmin):
     list_display = ('titulo', 'categoria')
     inlines = (EjemplarLibroInline,)
-    filter_horizontal = ('autor', 'genero',)
+    filter_horizontal = ('autor',)
 
 
 admin.site.register(Autor)
 admin.site.register(Editorial)
-admin.site.register(Genero)
 admin.site.register(Ubicacion)
 admin.site.register(Libro, LibroAdmin)
 admin.site.register(EjemplarLibro)

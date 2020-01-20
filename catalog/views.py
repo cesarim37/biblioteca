@@ -82,3 +82,29 @@ class CrearEjemplarView(CreateView):
     form_class = EjemplarLibroForm
     success_url = reverse_lazy('catalog:listar_libros')
     
+
+class NuevoAutorView(View):
+
+    def get(self, request, *args, **kwargs):
+
+        autor_form = AutorForm()
+
+        return render(request, 'catalog/nuevo_autor.html', {
+            'autor_form': autor_form,
+        })
+
+        
+    def post(self, request, *args, **kwargs):
+
+        autor_form = AutorForm(request.POST)
+        
+        if autor_form.is_valid():
+            
+            data = autor_form.cleaned_data
+
+            autor = Autor(**data)
+            autor.save()
+
+        return render(request, 'catalog/nuevo_autor.html', {
+            'autor_form': autor_form,
+        })

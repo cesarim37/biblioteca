@@ -14,7 +14,11 @@ urlpatterns = [
         name='home'
     ),
 
-
+    path(
+        route='nuevo_autor/',
+        view=views.NuevoAutorView.as_view(),
+        name='nuevo_autor'
+    ),
     path(
         route='crear_autor/',
         view=views.CrearAutorView.as_view(),

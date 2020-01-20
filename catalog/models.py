@@ -36,21 +36,9 @@ class Editorial(ModeloBase):
         return self.editorial
 
 
-class Genero(ModeloBase):
-
-    genero = models.CharField('Genero', max_length=100)
-
-    class Meta:
-        verbose_name='Genero'
-        verbose_name_plural='Generos'
-
-    def __str__(self):
-        return self.genero
-
-
 class Ubicacion(ModeloBase):
 
-    ubicacion = models.CharField('ubicacion', max_length=100)
+    ubicacion = models.CharField('Ubicación', max_length=100)
 
     class Meta:
         verbose_name='Ubicacion'
@@ -62,7 +50,7 @@ class Ubicacion(ModeloBase):
 
 class Libro(ModeloBase):
 
-    titulo = models.CharField('Titulo', max_length=150)
+    titulo = models.CharField('Título del Libro', max_length=150)
     portada = models.ImageField(
         'Portada del Libro',
         upload_to='catalog/portadas',
@@ -74,16 +62,16 @@ class Libro(ModeloBase):
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE, related_name='libro_editorial')
     
     CATEGORIA = (
-        ('referencias', 'Referencias'),
-        ('texto', 'Texto'),
-        ('recreativo', 'Recreativo'),
-        ('complementario', 'Complementario'),
-        ('literatura', 'Literatura'),
-        ('seccion docentes', 'Seccion Docentes'),
+        ('referencia', 'Referencia'),
+        ('complementarios', 'Complementarios'),
+        ('recreativos', 'Recreativos'),
+        ('textos', 'Textos'),
+        ('pedagogicos', 'Pedagógicos'),
+        ('publicaciones periodicas', 'Publicaciones Periodicas'),
+        ('seccion docentes', 'Sección Docentes'),
     )
 
-    categoria = models.CharField(max_length=20, choices=CATEGORIA, blank=True, default='referencias', help_text='Clasificación Dewey')
-    genero = models.ManyToManyField(Genero)
+    categoria = models.CharField(max_length=20, choices=CATEGORIA, blank=True, help_text='Clasificación Dewey')
     ubicacion = models.ForeignKey(Ubicacion, on_delete=models.CASCADE, related_name='libro_ubicacion')
 
     class Meta:
