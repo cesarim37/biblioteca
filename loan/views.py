@@ -26,15 +26,23 @@ class NuevoPrestamoView(View):
 
     def get(self, request, pk, slug, *args, **kwargs):
 
+        context= {}
         prestamo_form = NuevoPrestamoForm()
         lector = Perfil.objects.get(pk=pk)
         tipo_usuario = lector.tipo_usuario
+        print('paso!')
+        print(lector)
+        print(tipo_usuario)
 
         if tipo_usuario == 'visitante':
             prestamo_form = NuevoPrestamoForm(initial={'tipo_prestamo': 'sala'})
+            context['tipo_usuario']= 'visitante'
+        else:
+            context['tipo_usuario']= False
 
         return render(request, 'loan/nuevo_prestamo.html', {
             'prestamo_form': prestamo_form,
+            'tipo_usuario': context['tipo_usuario'],
         })
 
         
@@ -66,7 +74,10 @@ class NuevoPrestamoView(View):
             e = EjemplarLibro.objects.get(pk=ejemplar.pk)
             e.estado = 'prestado'
             e.save()
+        else:
+            return render(request, 'loan/nuevo_prestamo.html', {
+                'prestamo_form': prestamo_form,
+            })
 
-        return render(request, 'loan/nuevo_prestamo.html', {
-            'prestamo_form': prestamo_form,
-        })
+        return redirect('catalog:home')
+

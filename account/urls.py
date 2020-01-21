@@ -2,7 +2,7 @@
 
 # Django
 from django.urls import path
-# from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 
 # Views
 from account import views
@@ -14,11 +14,11 @@ urlpatterns = [
         view=views.CrearEstudianteView.as_view(),
         name='crear_estudiante'
     ),
-    # path(
-    #     route='editar_usuario/estudiante/<int:pk>/',
-    #     view=views.ActualizarEstudianteView.as_view(),
-    #     name='editar_estudiante'
-    # ),
+    path(
+        route='editar_usuario/estudiante/<int:pk>/',
+        view=views.ActualizarEstudianteView.as_view(),
+        name='editar_estudiante'
+    ),
     path(
         route='crear_personal/',
         view=views.CrearPersonalView.as_view(),
@@ -46,4 +46,15 @@ urlpatterns = [
         name='perfil_detail'
     ),
 
+
+    path(
+        route='login/',
+        view=views.LoginView.as_view(),
+        name='login'
+    ),
+    path(
+        route='logout/',
+        view=views.LogoutView.as_view(),
+        name='logout'
+    ),
 ]

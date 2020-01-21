@@ -24,7 +24,7 @@ class Prestamo(ModeloBase):
         ('sala', 'Sala'),
         ('hogar', 'Hogar'),
     )
-    tipo_prestamo = models.CharField(max_length=20, choices=TIPO_PRESTAMO, blank=True, default='sala', help_text='Tipo de Prestamo')
+    tipo_prestamo = models.CharField(max_length=20, choices=TIPO_PRESTAMO, blank=True)
     
     fecha_prestamo = models.DateField('Fecha de Prestamo')
     fecha_devolucion = models.DateField('Fecha de Devolución')

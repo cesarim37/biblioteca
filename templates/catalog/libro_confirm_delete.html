@@ -1,15 +1,29 @@
-{% extends 'base.html' %}
+{% extends "layout.html" %}
+{% load static %}
 
 {% block titulo %}
-  Biblioteca.dev | confirmación de Eliminación
+Confirmacion eliminar libro
+{% endblock %}
+
+{% block css %}
 {% endblock %}
 
 {% block content %}
 
-<form method="post">
-  {% csrf_token %}
-  <p><strong>¿Desea eliminar el registro {{ object }}?</strong></p>
-  <button type="submit" class="btn btn-danger">Confirmar</button>
-</form>
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Eliminar Libro</strong>
+    </div>
+    <div class="card-body card-block">
+
+      <form action="" method="POST">
+        {% csrf_token %}
+          <p><strong>¿Desea eliminar el registro {{ object }}?</strong></p>
+          <button type="submit" class="btn btn-danger">Confirmar</button>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

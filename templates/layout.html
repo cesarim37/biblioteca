@@ -29,6 +29,9 @@
   </title>
 
   <style type="text/css">
+    .header-menu{
+      margin-top: 5px;
+    }
   </style>
   {% block css %}
   {% endblock %}
@@ -46,6 +49,13 @@
           </li>
           <li class="menu-title">Biblioteca</li><!-- /.menu-title -->
           <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Prestamos</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-pencil"></i><a href="{% url 'loan:crear_prestamo' %}">Prestamo</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_libros' %}">Devolución</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Libros</a>
             <ul class="sub-menu children dropdown-menu">
               <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_libro' %}">Registrar Libro</a></li>
@@ -55,15 +65,25 @@
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-font"></i>Autores</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="#">Registrar Autor</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="#">Listado de Autores</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Autor</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_autor' %}">Listado de Autores</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="#">Registrar Usuarios</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="#">Listado de Usuarios</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_estudiante' %}">Registrar Estudiante</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_personal' %}">Registrar Personal</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_visitante' %}">Registrar Visitante</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_bibliotecario' %}">Registrar Bibliotecario</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Estadisticas</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:listar_prestamos' %}">Bibliografico</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="#">No Bibliografico</a></li>
             </ul>
           </li>
         </ul>
@@ -80,11 +100,12 @@
     <header id="header" class="header">
       <div class="top-left">
         <div class="navbar-header">
-          <a class="navbar-brand" href="./"><img src="{% static 'images/logo.png' %}" alt="Logo"></a>
+          <a class="navbar-brand" href="./"></a>
           <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
       </div>
       <div class="top-right">
+        {% if request.user.is_authenticated %}
         <div class="header-menu">
           <div class="header-left">
             <div class="user-area dropdown float-right">
@@ -93,15 +114,21 @@
               </a>
 
               <div class="user-menu dropdown-menu">
-                <a class="nav-link" href="#"><i class="fa fa-user"></i>My Profile</a>
-
-                <a class="nav-link" href="#"><i class="fa fa-cog"></i>Settings</a>
-
-                <a class="nav-link" href="#"><i class="fa fa-power-off"></i>Logout</a>
+                <a class="nav-link" href=""><i class="fa fa-cog"></i>Ultima Conexión</a>
+                <a class="nav-link" href="">{{ user.last_login  }}</a>
+                <a class="nav-link" href="{% url 'account:logout' %}"><i class="fa fa-power-off"></i>Logout</a>
               </div>
             </div>
           </div>
         </div>
+        {% else %}
+        <div class="header-menu">
+          <div class="header-left">
+            <a class="btn btn-outline-primary" href="{% url 'account:login' %}">Ingresar</a>
+          </div>
+        </div>
+        {% endif %}
+
     </header><!-- /header -->
     <!-- Header-->
 

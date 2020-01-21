@@ -404,3 +404,32 @@ class BibliotecarioForm(forms.Form):
             telefono=telefono
         )
         bibliotecario.save()
+
+
+class LoginForm(forms.Form):
+    cedula = forms.CharField(
+        label='Cedula',
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Cedula',
+            }
+        ))
+
+    password = forms.CharField(
+        label='Contraseña', 
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Contraseña'
+            }
+        ))
+
+    def __init__(self, request=None, *args, **kwargs):
+        """
+        The 'request' parameter is set for custom auth use by subclasses.
+        The form data comes in via the standard 'data' kwarg.
+        """
+        self.request = request
+        self.user_cache = None
+        super(LoginForm, self).__init__(*args, **kwargs)
