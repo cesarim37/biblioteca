@@ -14,11 +14,11 @@ urlpatterns = [
         view=views.CrearEstudianteView.as_view(),
         name='crear_estudiante'
     ),
-    path(
-        route='editar_usuario/estudiante/<int:pk>/',
-        view=views.ActualizarEstudianteView.as_view(),
-        name='editar_estudiante'
-    ),
+    # path(
+    #     route='editar_usuario/estudiante/<int:pk>/',
+    #     view=views.ActualizarEstudianteView.as_view(),
+    #     name='editar_estudiante'
+    # ),
     path(
         route='crear_personal/',
         view=views.CrearPersonalView.as_view(),

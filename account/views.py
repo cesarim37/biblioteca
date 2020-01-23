@@ -10,7 +10,7 @@ from account.forms import EstudianteForm, PersonalForm, VisitanteForm, Bibliotec
 from account.models import Perfil, Estudiante
 
 
-class CrearEstudianteView(FormView):
+class CrearEstudianteView(LoginRequiredMixin, FormView):
 
     template_name = 'account/crear_estudiante.html'
     form_class = EstudianteForm
@@ -22,14 +22,14 @@ class CrearEstudianteView(FormView):
         return super().form_valid(form)
 
 
-class ActualizarEstudianteView(UpdateView):
-    model = Estudiante
-    form_class = EstudianteForm
-    template_name = 'account/crear_estudiante.html'
-    success_url = reverse_lazy('account:listar_perfil')
+# class ActualizarEstudianteView(UpdateView):
+#     model = Estudiante
+#     form_class = EstudianteForm
+#     template_name = 'account/crear_estudiante.html'
+#     success_url = reverse_lazy('account:listar_perfil')
 
 
-class CrearPersonalView(FormView):
+class CrearPersonalView(LoginRequiredMixin, FormView):
 
     template_name = 'account/crear_personal.html'
     form_class = PersonalForm
@@ -41,7 +41,7 @@ class CrearPersonalView(FormView):
         return super().form_valid(form)
 
 
-class CrearVisitanteView(FormView):
+class CrearVisitanteView(LoginRequiredMixin, FormView):
 
     template_name = 'account/crear_visitante.html'
     form_class = VisitanteForm
@@ -53,7 +53,7 @@ class CrearVisitanteView(FormView):
         return super().form_valid(form)
 
 
-class CrearBibliotecarioView(FormView):
+class CrearBibliotecarioView(LoginRequiredMixin, FormView):
 
     template_name = 'account/crear_bibliotecario.html'
     form_class = BibliotecarioForm
@@ -65,14 +65,14 @@ class CrearBibliotecarioView(FormView):
         return super().form_valid(form)
 
 
-class ListadoPerfilView(ListView):
+class ListadoPerfilView(LoginRequiredMixin, ListView):
     model = Perfil
     template_name = 'account/listar_perfil.html'
     context_object_name = 'perfiles'
     queryset = Perfil.objects.filter(status=True)
 
 
-class PerfilDetailView(DetailView):
+class PerfilDetailView(LoginRequiredMixin, DetailView):
     model = Perfil
 
 

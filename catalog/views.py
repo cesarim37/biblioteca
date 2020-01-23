@@ -17,21 +17,21 @@ class CrearAutorView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('catalog:listar_autor')
 
 
-class ListadoAutorView(ListView):
+class ListadoAutorView(LoginRequiredMixin, ListView):
     model = Autor
     template_name = 'catalog/listar_autor.html'
     context_object_name = 'autores'
     queryset = Autor.objects.filter(status = True)
 
 
-class ActualizarAutorView(UpdateView):
+class ActualizarAutorView(LoginRequiredMixin, UpdateView):
     model = Autor
     form_class = AutorForm
     template_name = 'catalog/crear_autor.html'
     success_url = reverse_lazy('catalog:listar_autor')
 
 
-class EliminarAutorView(DeleteView):
+class EliminarAutorView(LoginRequiredMixin, DeleteView):
     model = Autor
 
     def post(self,request,pk,*args,**kwargs):
@@ -41,28 +41,28 @@ class EliminarAutorView(DeleteView):
         return redirect('catalog:listar_autor')
 
 
-class CrearLibroView(CreateView):
+class CrearLibroView(LoginRequiredMixin, CreateView):
     
     template_name = 'catalog/crear_libro.html'
     form_class = LibroForm
     success_url = reverse_lazy('catalog:listar_libros')
 
 
-class ListadoLibrosView(ListView):
+class ListadoLibrosView(LoginRequiredMixin, ListView):
     model = Libro
     template_name = 'catalog/listar_libro.html'
     context_object_name = 'libros'
     queryset = Libro.objects.filter(status = True)
 
 
-class ActualizarLibroView(UpdateView):
+class ActualizarLibroView(LoginRequiredMixin, UpdateView):
     model = Libro
     form_class = LibroForm
     template_name = 'catalog/crear_libro.html'
     success_url = reverse_lazy('catalog:listar_libros')
 
 
-class EliminarLibroView(DeleteView):
+class EliminarLibroView(LoginRequiredMixin, DeleteView):
     model = Libro
 
     def post(self,request,pk,*args,**kwargs):
@@ -72,11 +72,11 @@ class EliminarLibroView(DeleteView):
         return redirect('catalog:listar_libros')
 
 
-class LibroDetailView(DetailView):
+class LibroDetailView(LoginRequiredMixin, DetailView):
     model = Libro
 
 
-class CrearEjemplarView(CreateView):
+class CrearEjemplarView(LoginRequiredMixin, CreateView):
     
     template_name = 'catalog/crear_ejemplar.html'
     form_class = EjemplarLibroForm

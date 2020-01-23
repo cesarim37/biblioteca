@@ -10,19 +10,7 @@ from catalog.models import EjemplarLibro
 from account.models import Perfil
 
 
-# class CrearPrestamoView(LoginRequiredMixin, FormView):
-
-#     template_name = 'loan/crear_prestamo.html'
-#     form_class = PrestamoForm
-#     success_url = reverse_lazy('catalog:home')
-
-#     def form_valid(self, form):
-#         """Save form data."""
-#         form.save()
-#         return super().form_valid(form)
-
-
-class CrearPrestamoView(View):
+class CrearPrestamoView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
@@ -74,13 +62,13 @@ class CrearPrestamoView(View):
         return redirect('catalog:home')
 
 
-class ListadoPrestamoView(ListView):
+class ListadoPrestamoView(LoginRequiredMixin, ListView):
     model = Prestamo
     template_name = 'loan/listar_prestamos.html'
     context_object_name = 'prestamos'
 
 
-class NuevoPrestamoView(View):
+class NuevoPrestamoView(LoginRequiredMixin, View):
 
     def get(self, request, pk, slug, *args, **kwargs):
 
@@ -140,7 +128,7 @@ class NuevoPrestamoView(View):
         return redirect('catalog:home')
 
 
-class DevolverPrestamoView(View):
+class DevolverPrestamoView(LoginRequiredMixin, View):
 
     def get(self, request, pk_ejemplar, pk_lector, *args, **kwargs):
 
@@ -160,7 +148,7 @@ class DevolverPrestamoView(View):
         return redirect(reverse_lazy('account:perfil_detail', kwargs={'slug': lector.slug, 'pk': lector.pk}))
 
 
-class DevolucionView(View):
+class DevolucionView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
 
@@ -193,27 +181,6 @@ class DevolucionView(View):
             ejemplar.estado = 'disponible'
             ejemplar.save()
 
-            print(data)
-            print(devolucion.bibliotecario)
-            print(devolucion.lector)
-            print(devolucion.ejemplar)
-            print(devolucion.tipo_prestamo)
-            print(devolucion.fecha_prestamo)
-            print(devolucion.fecha_devolucion)
-            print(devolucion.fecha_devuelto)
-
-            # prestamo = Prestamo(
-            #         bibliotecario=bibliotecario,
-            #         lector=lector,
-            #         ejemplar=ejemplar,
-            #         tipo_prestamo=tipo_prestamo,
-            #         fecha_prestamo=fecha_prestamo,
-            #         fecha_devolucion=fecha_devolucion,
-            #     )
-            # prestamo.save()
-
-            # ejemplar.estado = 'prestado'
-            # ejemplar.save()
         else:
             return render(request, 'loan/crear_prestamo.html', {
                 'prestamo_form': prestamo_form,
