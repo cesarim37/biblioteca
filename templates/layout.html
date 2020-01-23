@@ -49,10 +49,10 @@
           </li>
           <li class="menu-title">Biblioteca</li><!-- /.menu-title -->
           <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Prestamos</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-file-text-o"></i>Prestamos</a>
             <ul class="sub-menu children dropdown-menu">
               <li><i class="fa fa-pencil"></i><a href="{% url 'loan:crear_prestamo' %}">Prestamo</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_libros' %}">Devolución</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:devolucion' %}">Devolución</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">

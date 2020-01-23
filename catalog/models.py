@@ -90,7 +90,7 @@ class EjemplarLibro(ModeloBase):
 
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE, related_name='ejemplar_libro')
 
-    cota = models.CharField('Cota', max_length=100)
+    cota = models.CharField('Cota', max_length=100, unique=True)
     
     CONDICION = (
         ('excelente', 'Excelente'),

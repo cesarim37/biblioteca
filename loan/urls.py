@@ -19,11 +19,22 @@ urlpatterns = [
         view=views.NuevoPrestamoView.as_view(),
         name='nuevo_prestamo'
     ),
+    path(
+        route='<int:pk_ejemplar>/<int:pk_lector>/devolver_prestamo/',
+        view=views.DevolverPrestamoView.as_view(),
+        name='devolver_prestamo'
+    ),
 
     path(
         route='listar_prestamos/',
         view=views.ListadoPrestamoView.as_view(),
         name='listar_prestamos'
+    ),
+
+    path(
+        route='devolucion/',
+        view=views.DevolucionView.as_view(),
+        name='devolucion'
     ),
 
 ]

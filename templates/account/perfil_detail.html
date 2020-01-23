@@ -39,7 +39,7 @@ Detalle Usuario
             <th>Tipo de prestamo</th>
             <th>fecha de prestamo</th>
             <th>fecha de devolucion</th>
-            <th>fecha devuelto</th>
+            <th>Devolver</th>
           </tr>
         </thead>
         <tbody>
@@ -50,7 +50,9 @@ Detalle Usuario
                 <td>{{ prestamo.tipo_prestamo }}</td>
                 <td>{{ prestamo.fecha_prestamo }}</td>
                 <td>{{ prestamo.fecha_devolucion }}</td>
-                <td>Pendiente</td>
+                <td>
+                  <a href="{% url 'loan:devolver_prestamo' pk_ejemplar=prestamo.ejemplar.pk pk_lector=object.pk %}" class="btn btn-outline-primary"><i class="fa fa-share-square-o"></i></a>
+                </td>
               </tr>
             {% endif %}
           {% endfor %}

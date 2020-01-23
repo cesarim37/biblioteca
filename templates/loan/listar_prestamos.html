@@ -42,7 +42,11 @@ Listado de Prestamos
             <td>{{ prestamo.tipo_prestamo }}</td>
             <td>{{ prestamo.fecha_prestamo }}</td>
             <td>{{ prestamo.fecha_devolucion }}</td>
-            <td>{{ prestamo.fecha_devuelto }}</td>
+            {% if prestamo.fecha_devuelto %}
+              <td>{{ prestamo.fecha_devuelto }}</td>
+            {% else %}
+              <td> Pendiente </td>
+            {% endif %}
           </tr>
           {% endfor %}
         </tbody>

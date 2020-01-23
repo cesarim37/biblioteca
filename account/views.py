@@ -11,7 +11,6 @@ from account.models import Perfil, Estudiante
 
 
 class CrearEstudianteView(FormView):
-    """Users sign up view."""
 
     template_name = 'account/crear_estudiante.html'
     form_class = EstudianteForm
@@ -31,7 +30,6 @@ class ActualizarEstudianteView(UpdateView):
 
 
 class CrearPersonalView(FormView):
-    """Users sign up view."""
 
     template_name = 'account/crear_personal.html'
     form_class = PersonalForm
@@ -44,7 +42,6 @@ class CrearPersonalView(FormView):
 
 
 class CrearVisitanteView(FormView):
-    """Users sign up view."""
 
     template_name = 'account/crear_visitante.html'
     form_class = VisitanteForm
@@ -57,7 +54,6 @@ class CrearVisitanteView(FormView):
 
 
 class CrearBibliotecarioView(FormView):
-    """Users sign up view."""
 
     template_name = 'account/crear_bibliotecario.html'
     form_class = BibliotecarioForm

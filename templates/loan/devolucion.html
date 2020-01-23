@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Crear Prestamo
+Devolución
 {% endblock %}
 
 {% block css %}
@@ -15,14 +15,14 @@ Crear Prestamo
 <div class="col-xs-12 offset-sm-3 col-sm-6">
   <div class="card">
     <div class="card-header">
-      <strong>Nuevo Prestamo</strong>
+      <strong>Devolución</strong>
     </div>
     <div class="card-body card-block">
 
       <form action="" method="POST">
         {% csrf_token %}
         
-        {{ prestamo_form.as_p }}
+        {{ devolucion_form.as_p }}
 
         <button class="btn btn-primary" type="submit">Guardar</button>
 
