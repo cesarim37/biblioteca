@@ -26,7 +26,7 @@ class Autor(ModeloBase):
 
 class Editorial(ModeloBase):
 
-    editorial = models.CharField('Editorial', max_length=100)
+    editorial = models.CharField('Editorial', max_length=100, unique=True)
 
     class Meta:
         verbose_name='Editorial'
@@ -38,7 +38,7 @@ class Editorial(ModeloBase):
 
 class Ubicacion(ModeloBase):
 
-    ubicacion = models.CharField('Ubicación', max_length=100)
+    ubicacion = models.CharField('Ubicación', max_length=100, unique=True)
 
     class Meta:
         verbose_name='Ubicacion'
@@ -58,7 +58,7 @@ class Libro(ModeloBase):
         null=True
     )
 
-    autor = models.ManyToManyField(Autor)
+    autor = models.ManyToManyField(Autor, related_name='libro_autor')
     editorial = models.ForeignKey(Editorial, on_delete=models.CASCADE, related_name='libro_editorial')
     
     CATEGORIA = (

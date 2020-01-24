@@ -4,7 +4,7 @@
 from django import forms
 
 # Models
-from catalog.models import Autor, Libro, EjemplarLibro
+from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro
 
 
 class AutorForm(forms.ModelForm):
@@ -22,6 +22,40 @@ class AutorForm(forms.ModelForm):
         fields = (
             'nombre',
             'apellido',
+        )
+
+
+class EditorialForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(EditorialForm, self).__init__(*args, **kwargs)
+        file = []
+        for field in self.fields:
+            if not (field in file):
+                self.fields[field].widget.attrs['class'] = 'form-control'
+
+    class Meta:
+
+        model = Editorial
+        fields = (
+            'editorial',
+        )
+
+
+class UbicacionForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(UbicacionForm, self).__init__(*args, **kwargs)
+        file = []
+        for field in self.fields:
+            if not (field in file):
+                self.fields[field].widget.attrs['class'] = 'form-control'
+
+    class Meta:
+
+        model = Ubicacion
+        fields = (
+            'ubicacion',
         )
 
 

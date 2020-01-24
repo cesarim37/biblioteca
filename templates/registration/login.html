@@ -1,39 +1,163 @@
-{% extends "layout.html" %}
 {% load static %}
 
-{% block titulo %}
-Login
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-{% block css %}
-{% endblock %}
+  <meta name="description" content="Ela Admin - HTML5 Admin Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block content %}
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/normalize.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/bootstrap.min.css' %}">
+  
+  <link rel="stylesheet" href="{% static 'dist_lib/font-awesome-4.7.0/css/font-awesome.min.css' %}">
 
-<div class="col-xs-12 offset-sm-3 col-sm-6">
-  <div class="card">
-    <div class="card-header">
-      <strong>Iniciar sección</strong>
-    </div>
-    <div class="card-body card-block">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/themify-icons.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/pe-icon-7-stroke.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/flag-icon.min.css' %}">
 
-      <form method="POST" action="">
-        {% csrf_token %}
+  <link rel="stylesheet" href="{% static 'assets/css/cs-skin-elastic.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/chosen/chosen.min.css' %}">
 
-        {% if form.errors %}
-        <div class="alert alert-danger">
-          Tu Usuario y/o Contrasea no coinciden.
+  
+  <title>
+    Ingresar
+  </title>
+
+  <style type="text/css">
+    .header-menu{
+      margin-top: 5px;
+    }
+    .right-panel header.header{
+      height: 70px;
+    }
+    .right-panel{
+      margin-top: 65px;
+      margin-left: 0;
+    }
+    aside.left-panel {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      top: 70px;
+    }
+    .images{
+      height: 55px;
+    }
+    .logo-escuela{
+      height: 100%;
+    }
+  </style>
+
+</head>
+<body>
+  <!-- Right Panel -->
+  <div id="right-panel" class="right-panel">
+
+    <!-- Header-->
+    <header id="header" class="header">
+      <div class="top-left">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="./">
+            <div class="images">
+              <img src="{% static 'images/mpppe.png' %}" alt="Logo-mpppe" class="logo-mpppe">
+              <img src="{% static 'images/logo.png' %}" alt="Logo-escuela" class="logo-escuela">
+            </div>
+          </a>
+          <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
-        {% endif%}
+      </div>
+      <div class="top-right">
+        {% if request.user.is_authenticated %}
+        <div class="header-menu">
+          <div class="header-left">
+            <div class="user-area dropdown float-right">
+              <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="user-avatar rounded-circle" src="{% static 'images/perfil.png' %}" alt="User Avatar">
+              </a>
 
-        {{ form.as_p}}
+              <div class="user-menu dropdown-menu">
+                <a class="nav-link" href=""><i class="fa fa-cog"></i>Ultima Conexión</a>
+                <a class="nav-link" href="">{{ user.last_login  }}</a>
+                <a class="nav-link" href="{% url 'account:logout' %}"><i class="fa fa-power-off"></i>Logout</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="header-menu">
+          <div class="header-left">
+            <a class="btn btn-outline-primary" href="{% url 'account:login' %}">Ingresar</a>
+          </div>
+        </div>
+        {% endif %}
 
-        <button class="btn btn-primary btn-block mt-5" type="submit">Ingresar</button>
-        <a href="#"><small> Regresar al home </small></a>
+    </header><!-- /header -->
+    <!-- Header-->
 
-      </form>
-    </div>
-  </div>
-</div>
+    <div class="content">
+      <div class="animated fadeIn">
+        
+        
+        <div class="row">
 
-{% endblock %}
+          <div class="col-xs-12 offset-sm-3 col-sm-6">
+            <div class="card">
+              <div class="card-header">
+                <strong>Iniciar sección</strong>
+              </div>
+              <div class="card-body card-block">
+
+                <form method="POST" action="">
+                  {% csrf_token %}
+
+                  {% if form.errors %}
+                  <div class="alert alert-danger">
+                    Tu Usuario y/o Contrasea no coinciden.
+                  </div>
+                  {% endif%}
+
+                  {{ form.as_p}}
+
+                  <button class="btn btn-primary btn-block mt-5" type="submit">Ingresar</button>
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- .animated -->
+    </div><!-- .content -->
+    <div class="clearfix"></div>
+
+    <footer class="site-footer">
+      <div class="footer-inner bg-white">
+        <div class="row">
+          <div class="offset-sm-6 col-sm-6 text-right">
+            Sistema Bibliotecario, 2020
+          </div>
+        </div>
+      </div>
+    </footer>
+
+
+  </div><!-- /#right-panel -->
+
+  <!-- Right Panel -->
+
+  <!-- Scripts -->
+  <script src="{% static 'assets/js/dist_lib/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/bootstrap.min.js' %}"></script>
+  <script src="{% static 'assets/js/dist_lib/jquery.matchHeight.min.js' %}"></script>
+  
+  <script src="{% static 'assets/js/main.js' %}"></script>
+  {% block js %}
+  {% endblock %}
+
+</body>
+</html>

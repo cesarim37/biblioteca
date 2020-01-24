@@ -171,7 +171,8 @@ class DevolucionView(LoginRequiredMixin, View):
 
             cota = data['ejemplar']
             ejemplar = EjemplarLibro.objects.get(cota=cota)
-            devolucion = Prestamo.objects.get(ejemplar=ejemplar)
+
+            devolucion = Prestamo.objects.get(ejemplar=ejemplar, fecha_devuelto=None)
 
             now = datetime.now()
             x = now.date()

@@ -32,6 +32,24 @@
     .header-menu{
       margin-top: 5px;
     }
+    .right-panel header.header{
+      height: 70px;
+    }
+    .right-panel{
+      margin-top: 65px;
+    }
+    aside.left-panel {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      top: 70px;
+    }
+    .images{
+      height: 55px;
+    }
+    .logo-escuela{
+      height: 100%;
+    }
   </style>
   {% block css %}
   {% endblock %}
@@ -45,14 +63,14 @@
       <div id="main-menu" class="main-menu collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li>
-            <a href="{% url 'catalog:home' %}"><i class="menu-icon fa fa-desktop"></i>Inicio</a>
+            <a href="{% url 'catalog:home' %}"><i class="menu-icon fa fa-home"></i>Inicio</a>
           </li>
           <li class="menu-title">Biblioteca</li><!-- /.menu-title -->
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-file-text-o"></i>Prestamos</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="{% url 'loan:crear_prestamo' %}">Prestamo</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:devolucion' %}">Devolución</a></li>
+              <li><i class="fa fa-plus"></i><a href="{% url 'loan:crear_prestamo' %}">Prestamo</a></li>
+              <li><i class="fa fa-reply"></i><a href="{% url 'loan:devolucion' %}">Devolución</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
@@ -60,13 +78,19 @@
             <ul class="sub-menu children dropdown-menu">
               <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_libro' %}">Registrar Libro</a></li>
               <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_libros' %}">Listado de Libros</a></li>
+              <li><i class="fa fa-font"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Autor</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_autor' %}">Listado de Autores</a></li>
+              <li><i class="fa fa-bookmark"></i><a href="{% url 'catalog:crear_editorial' %}">Registrar Editorial</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_editorial' %}">Lista de Editoriales</a></li>
+              <li><i class="fa fa-thumb-tack"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Ubicación</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_ubicacion' %}">Ubicaciones</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-font"></i>Autores</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-font"></i>Material</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Autor</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_autor' %}">Listado de Autores</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Material</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_autor' %}">Listado de Material</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
@@ -100,7 +124,12 @@
     <header id="header" class="header">
       <div class="top-left">
         <div class="navbar-header">
-          <a class="navbar-brand" href="./"></a>
+          <a class="navbar-brand" href="./">
+            <div class="images">
+              <img src="{% static 'images/mpppe.png' %}" alt="Logo-mpppe" class="logo-mpppe">
+              <img src="{% static 'images/logo.png' %}" alt="Logo-escuela" class="logo-escuela">
+            </div>
+          </a>
           <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
         </div>
       </div>
@@ -149,11 +178,8 @@
     <footer class="site-footer">
       <div class="footer-inner bg-white">
         <div class="row">
-          <div class="col-sm-6">
+          <div class="offset-sm-6 col-sm-6 text-right">
             Sistema Bibliotecario, 2020
-          </div>
-          <div class="col-sm-6 text-right">
-            Desarrollado por:
           </div>
         </div>
       </div>

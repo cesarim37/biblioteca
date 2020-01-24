@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Confirmacion eliminar editorial
+{% endblock %}
+
+{% block css %}
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Eliminar Editorial</strong>
+    </div>
+    <div class="card-body card-block">
+
+      <form action="" method="POST">
+        {% csrf_token %}
+          <p><strong>¿Desea eliminar el registro {{ object }}?</strong></p>
+          <button type="submit" class="btn btn-danger">Confirmar</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
