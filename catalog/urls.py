@@ -152,4 +152,11 @@ urlpatterns = [
         view= views.MaterialDetailView.as_view(),
         name='material_detail'
     ),
+
+    ########## CRUD de Ejemplares ##########
+    path(
+        route='crear_ejemplar_material/',
+        view=views.CrearEjemplarMaterialView.as_view(),
+        name='crear_ejemplar_material'
+    ),
 ]

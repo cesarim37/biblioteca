@@ -4,7 +4,7 @@
 from django import forms
 
 # Models
-from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material
+from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material, EjemplarMaterial
 
 
 ##############################################
@@ -161,3 +161,16 @@ class MaterialForm(forms.ModelForm):
                     'data-placeholder': 'Selecciona categoria...',
                 }),
         }
+
+
+class EjemplarMaterialForm(forms.ModelForm):
+
+    class Meta:
+
+        model = EjemplarMaterial
+        fields = (
+            'material',
+            'condicion',
+            'adquirido',
+            'estado',
+        )

@@ -131,6 +131,13 @@ class Material(ModeloBase):
 
     material = models.CharField('Material', max_length=100)
     descripcion = models.CharField('Descripción', max_length=200, blank=True, null=True)
+
+    imagen = models.ImageField(
+        'Imagen de Referencia',
+        upload_to='catalog/materiales',
+        blank=True,
+        null=True
+    )
     
     CATEGORIA = (
         ('mapas', 'Mapas'),

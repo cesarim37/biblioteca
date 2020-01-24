@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView
 
-from catalog.forms import AutorForm, EditorialForm, UbicacionForm, LibroForm, EjemplarLibroForm, MaterialForm
+from catalog.forms import AutorForm, EditorialForm, UbicacionForm, LibroForm, EjemplarLibroForm, MaterialForm, EjemplarMaterialForm
 from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material
 
 
@@ -235,8 +235,17 @@ class EliminarMaterialView(LoginRequiredMixin, DeleteView):
         return redirect('catalog:listar_material')
 
 
-########## Detalles de Libro ##########
+########## Detalles de Material ##########
 
 class MaterialDetailView(LoginRequiredMixin, DetailView):
     model = Material
     template_name = 'catalog/material/material_detail.html'
+
+
+########## CRUD de Ejemplares Material ##########
+
+class CrearEjemplarMaterialView(LoginRequiredMixin, CreateView):
+    
+    template_name = 'catalog/crear_ejemplar_material.html'
+    form_class = EjemplarMaterialForm
+    success_url = reverse_lazy('catalog:listar_material')

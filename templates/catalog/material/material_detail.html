@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Detalle Libro
+Detalle Material
 {% endblock %}
 
 {% block css %}
@@ -24,26 +24,19 @@ Detalle Libro
 <div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <strong class="card-title">Detalles de Libro</strong>
+      <strong class="card-title">Detalles de Material</strong>
     </div>
     <div class="card-body row">
       <div class="col-md-4 text-center portada">
-        {% if object.portada %}
-          <img src="{{ object.portada.url }}" alt="" style="width: 75%;">
+        {% if object.imagen %}
+          <img src="{{ object.imagen.url }}" alt="" style="width: 75%;">
         {% else %}
-          <p>No hay portada</p>
+          <p>No hay imagen</p>
         {% endif %}        
       </div>
       <div class="col-md-8 descripcion">
-        <div> Título: {{ object.titulo }}</div>
-        <div> Autor o Autores: 
-            {% for autor in object.autor.all %}
-                <li>{{ autor }}</li>
-            {% endfor %}
-        </div>
-        <div> Editorial: {{ object.editorial }}</div>
+        <div> Material: {{ object.material }}</div>
         <div> Categoria: {{ object.categoria }}</div>
-        <div> Ubicación: {{ object.ubicacion }}</div>
       </div>
     </div>
   </div>
@@ -56,23 +49,25 @@ Detalle Libro
       <strong class="card-title">Ejemplares:</strong>
     </div>
     <div class="card-body">
-      {% if object.ejemplar_libro.all %}
+      {% if object.ejemplar_material.all %}
       <table id="bootstrap-data-table" class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Cota</th>
+            <th>codigo</th>
+            <th>material</th>
             <th>condicion</th>
             <th>adquirido</th>
             <th>estado</th>
           </tr>
         </thead>
         <tbody>
-          {% for libro in object.ejemplar_libro.all %}
+          {% for material in object.ejemplar_material.all %}
           <tr>
-            <td>{{ libro.cota }}</td>
-            <td>{{ libro.condicion }}</td>
-            <td>{{ libro.adquirido }}</td>
-            <td>{{ libro.estado }}</td>
+            <td>{{ material.id }}</td>
+            <td>{{ material.material }}</td>
+            <td>{{ material.condicion }}</td>
+            <td>{{ material.adquirido }}</td>
+            <td>{{ material.estado }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -82,7 +77,7 @@ Detalle Libro
       {% endif %}
     </div>
   </div>
-  <a href="{% url 'catalog:crear_ejemplar' %}" class="btn btn-primary">Agregar ejemplar</a>
+  <a href="{% url 'catalog:crear_ejemplar_material' %}" class="btn btn-primary">Agregar ejemplar</a>
 </div>
 
 {% endblock %}
