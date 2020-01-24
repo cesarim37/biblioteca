@@ -4,8 +4,12 @@
 from django import forms
 
 # Models
-from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro
+from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material
 
+
+##############################################
+########### MATERIAL BIBLIOGRAFICO ###########
+##############################################
 
 class AutorForm(forms.ModelForm):
     
@@ -123,3 +127,37 @@ class EjemplarLibroForm(forms.ModelForm):
             'adquirido',
             'estado',
         )
+
+
+#################################################
+########### MATERIAL NO BIBLIOGRAFICO ###########
+#################################################
+
+class MaterialForm(forms.ModelForm):
+
+    class Meta:
+        model = Material
+        
+        fields = (
+            'material',
+            'descripcion',
+            'categoria',
+        )
+
+        widgets = {
+            'material': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }),
+
+            'descripcion': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                }),
+
+            'categoria': forms.Select(
+                attrs={
+                    'class': 'standardSelect',
+                    'data-placeholder': 'Selecciona categoria...',
+                }),
+        }

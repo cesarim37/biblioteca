@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from account.models import Perfil, Bibliotecario
-from catalog.models import EjemplarLibro
+from catalog.models import EjemplarLibro, EjemplarMaterial
 
 
 class ModeloBase(models.Model):
@@ -41,7 +41,7 @@ class Prestamo(ModeloBase):
 class PrestamoMaterial(ModeloBase):
 
     bibliotecario = models.ForeignKey(Bibliotecario, on_delete=models.CASCADE, related_name='material_bibliotecario')
-    ejemplar_material = models.ForeignKey(EjemplarLibro, on_delete=models.CASCADE, related_name='material_ejemplar')
+    ejemplar_material = models.ForeignKey(EjemplarMaterial, on_delete=models.CASCADE, related_name='material_ejemplar')
     lector_material = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='material_user')
 
     TIPO_PRESTAMO = (

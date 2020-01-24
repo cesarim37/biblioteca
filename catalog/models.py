@@ -11,6 +11,10 @@ class ModeloBase(models.Model):
         abstract = True
 
 
+##############################################
+########### MATERIAL BIBLIOGRAFICO ###########
+##############################################
+
 class Autor(ModeloBase):
 
     nombre = models.CharField('Nombres', max_length=100)
@@ -119,7 +123,11 @@ class EjemplarLibro(ModeloBase):
         return '%s, ejemplar: %s' % (self.libro.titulo, self.cota)
 
 
-class NoBibliografico(ModeloBase):
+#################################################
+########### MATERIAL NO BIBLIOGRAFICO ###########
+#################################################
+
+class Material(ModeloBase):
 
     material = models.CharField('Material', max_length=100)
     descripcion = models.CharField('Descripción', max_length=200, blank=True, null=True)
@@ -127,7 +135,6 @@ class NoBibliografico(ModeloBase):
     CATEGORIA = (
         ('mapas', 'Mapas'),
         ('meni', 'Material Educativo no Impreso'),
-        ('pizarra_magnetica', 'Pizarra Magnetica'),
         ('juegos', 'Juegos Didacticos'),
         ('otros', 'Otros'),
     )
@@ -146,7 +153,7 @@ class NoBibliografico(ModeloBase):
 
 class EjemplarMaterial(ModeloBase):
 
-    no_bibliografico = models.ForeignKey(NoBibliografico, on_delete=models.CASCADE, related_name='ejemplar_material')
+    material = models.ForeignKey(Material, on_delete=models.CASCADE, related_name='ejemplar_material')
     
     CONDICION = (
         ('excelente', 'Excelente'),
@@ -172,4 +179,4 @@ class EjemplarMaterial(ModeloBase):
         verbose_name_plural='Ejemplares no Bibliograficos'
 
     def __str__(self):
-        return '%s, ejemplar: %s' % (self.no_bibliografico.material, self.pk)
+        return '%s, ejemplar: %s' % (self.material.material, self.pk)

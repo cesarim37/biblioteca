@@ -3,12 +3,16 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView
 
-from catalog.forms import AutorForm, EditorialForm, UbicacionForm, LibroForm, EjemplarLibroForm
-from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro
+from catalog.forms import AutorForm, EditorialForm, UbicacionForm, LibroForm, EjemplarLibroForm, MaterialForm
+from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material
+
 
 def home(request):
     return render(request, 'home.html', {})
 
+##############################################
+########### MATERIAL BIBLIOGRAFICO ###########
+##############################################
 
 ########## CRUD de Autores ##########
 
@@ -192,3 +196,47 @@ class CrearEjemplarView(LoginRequiredMixin, CreateView):
 #         object.save()
 #         return redirect('catalog:listar_libros')
 
+
+#################################################
+########### MATERIAL NO BIBLIOGRAFICO ###########
+#################################################
+
+########## CRUD de Material ##########
+
+class ListadoMaterialView(LoginRequiredMixin, ListView):
+    model = Material
+    template_name = 'catalog/material/listar_material.html'
+    context_object_name = 'materiales'
+    queryset = Material.objects.filter(status = True)
+
+
+class CrearMaterialView(LoginRequiredMixin, CreateView):
+    
+    template_name = 'catalog/material/crear_material.html'
+    form_class = MaterialForm
+    success_url = reverse_lazy('catalog:listar_material')
+
+
+class ActualizarMaterialView(LoginRequiredMixin, UpdateView):
+    model = Material
+    form_class = MaterialForm
+    template_name = 'catalog/material/crear_material.html'
+    success_url = reverse_lazy('catalog:listar_material')
+
+
+class EliminarMaterialView(LoginRequiredMixin, DeleteView):
+    model = Material
+    template_name = 'catalog/material/material_confirm_delete.html'
+
+    def post(self,request,pk,*args,**kwargs):
+        object = Material.objects.get(id = pk)
+        object.status = False
+        object.save()
+        return redirect('catalog:listar_material')
+
+
+########## Detalles de Libro ##########
+
+class MaterialDetailView(LoginRequiredMixin, DetailView):
+    model = Material
+    template_name = 'catalog/material/material_detail.html'

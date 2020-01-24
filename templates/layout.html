@@ -89,8 +89,8 @@
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-font"></i>Material</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_autor' %}">Registrar Material</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_autor' %}">Listado de Material</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'catalog:crear_material' %}">Registrar Material</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'catalog:listar_material' %}">Listado de Material</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
@@ -107,7 +107,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Estadisticas</a>
             <ul class="sub-menu children dropdown-menu">
               <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:listar_prestamos' %}">Bibliografico</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="#">No Bibliografico</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:listar_prestamos_material' %}">No Bibliografico</a></li>
             </ul>
           </li>
         </ul>

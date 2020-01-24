@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Detalle Libro
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/datatable/dataTables.bootstrap.min.css' %}">
+  <style type="text/css">
+    .portada{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .descripcion div{
+      padding-bottom: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <strong class="card-title">Detalles de Libro</strong>
+    </div>
+    <div class="card-body row">
+      <div class="col-md-4 text-center portada">
+        {% if object.portada %}
+          <img src="{{ object.portada.url }}" alt="" style="width: 75%;">
+        {% else %}
+          <p>No hay portada</p>
+        {% endif %}        
+      </div>
+      <div class="col-md-8 descripcion">
+        <div> Título: {{ object.titulo }}</div>
+        <div> Autor o Autores: 
+            {% for autor in object.autor.all %}
+                <li>{{ autor }}</li>
+            {% endfor %}
+        </div>
+        <div> Editorial: {{ object.editorial }}</div>
+        <div> Categoria: {{ object.categoria }}</div>
+        <div> Ubicación: {{ object.ubicacion }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <strong class="card-title">Ejemplares:</strong>
+    </div>
+    <div class="card-body">
+      {% if object.ejemplar_libro.all %}
+      <table id="bootstrap-data-table" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Cota</th>
+            <th>condicion</th>
+            <th>adquirido</th>
+            <th>estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for libro in object.ejemplar_libro.all %}
+          <tr>
+            <td>{{ libro.cota }}</td>
+            <td>{{ libro.condicion }}</td>
+            <td>{{ libro.adquirido }}</td>
+            <td>{{ libro.estado }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <h6>No existen ejemplares registrados</h6>
+      {% endif %}
+    </div>
+  </div>
+  <a href="{% url 'catalog:crear_ejemplar' %}" class="btn btn-primary">Agregar ejemplar</a>
+</div>
+
+{% endblock %}

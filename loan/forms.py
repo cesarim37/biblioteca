@@ -35,7 +35,6 @@ class PrestamoForm(forms.Form):
         ),
     )
 
-
     TIPO_PRESTAMO = (
         ('aula', 'Aula'),
         ('sala', 'Sala'),
@@ -102,12 +101,10 @@ class PrestamoForm(forms.Form):
         ejemplar = self.cleaned_data['ejemplar']
         try:
             e = EjemplarLibro.objects.get(cota=ejemplar)
-            print('paso!!')
         except:
             raise forms.ValidationError('El ejemplar no existe, verifique la cota')
 
         if e.estado == 'prestado' or e.condicion == 'dañado':
-            print('paso2!!')
             raise forms.ValidationError('Este ejemplar no se encuentra disponible')
 
         return data

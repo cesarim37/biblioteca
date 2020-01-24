@@ -5,10 +5,22 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView, FormView
 
 from loan.forms import PrestamoForm, NuevoPrestamoForm, DevolucionForm
-from loan.models import Prestamo
+from loan.models import Prestamo, PrestamoMaterial
 from catalog.models import EjemplarLibro
 from account.models import Perfil
 
+
+##############################################
+########### MATERIAL BIBLIOGRAFICO ###########
+##############################################
+
+class ListadoPrestamoView(LoginRequiredMixin, ListView):
+    model = Prestamo
+    template_name = 'loan/listar_prestamos.html'
+    context_object_name = 'prestamos'
+
+
+########### Prestamos/Devolución desde Inicio ###########
 
 class CrearPrestamoView(LoginRequiredMixin, View):
 
@@ -62,11 +74,49 @@ class CrearPrestamoView(LoginRequiredMixin, View):
         return redirect('catalog:home')
 
 
-class ListadoPrestamoView(LoginRequiredMixin, ListView):
-    model = Prestamo
-    template_name = 'loan/listar_prestamos.html'
-    context_object_name = 'prestamos'
+class DevolucionView(LoginRequiredMixin, View):
 
+    def get(self, request, *args, **kwargs):
+
+        devolucion_form = DevolucionForm()
+
+        return render(request, 'loan/devolucion.html', {
+            'devolucion_form': devolucion_form,
+        })
+
+        
+    def post(self, request, *args, **kwargs):
+
+        devolucion_form = DevolucionForm(request.POST)
+        
+        if devolucion_form.is_valid():
+            
+            bibliotecario = self.request.user.perfil_usuario.bibliotecario_perfil
+            
+            data = devolucion_form.cleaned_data
+
+            cota = data['ejemplar']
+            ejemplar = EjemplarLibro.objects.get(cota=cota)
+
+            devolucion = Prestamo.objects.get(ejemplar=ejemplar, fecha_devuelto=None)
+
+            now = datetime.now()
+            x = now.date()
+
+            devolucion.fecha_devuelto = x
+            devolucion.save()
+            ejemplar.estado = 'disponible'
+            ejemplar.save()
+
+        else:
+            return render(request, 'loan/crear_prestamo.html', {
+                'prestamo_form': prestamo_form,
+            })
+
+        return redirect('catalog:home')
+
+
+########### Prestamos/Devolución desde Usuario ###########
 
 class NuevoPrestamoView(LoginRequiredMixin, View):
 
@@ -148,43 +198,11 @@ class DevolverPrestamoView(LoginRequiredMixin, View):
         return redirect(reverse_lazy('account:perfil_detail', kwargs={'slug': lector.slug, 'pk': lector.pk}))
 
 
-class DevolucionView(LoginRequiredMixin, View):
+#################################################
+########### MATERIAL NO BIBLIOGRAFICO ###########
+#################################################
 
-    def get(self, request, *args, **kwargs):
-
-        devolucion_form = DevolucionForm()
-
-        return render(request, 'loan/devolucion.html', {
-            'devolucion_form': devolucion_form,
-        })
-
-        
-    def post(self, request, *args, **kwargs):
-
-        devolucion_form = DevolucionForm(request.POST)
-        
-        if devolucion_form.is_valid():
-            
-            bibliotecario = self.request.user.perfil_usuario.bibliotecario_perfil
-            
-            data = devolucion_form.cleaned_data
-
-            cota = data['ejemplar']
-            ejemplar = EjemplarLibro.objects.get(cota=cota)
-
-            devolucion = Prestamo.objects.get(ejemplar=ejemplar, fecha_devuelto=None)
-
-            now = datetime.now()
-            x = now.date()
-
-            devolucion.fecha_devuelto = x
-            devolucion.save()
-            ejemplar.estado = 'disponible'
-            ejemplar.save()
-
-        else:
-            return render(request, 'loan/crear_prestamo.html', {
-                'prestamo_form': prestamo_form,
-            })
-
-        return redirect('catalog:home')
+class ListadoPrestamoMaterialView(LoginRequiredMixin, ListView):
+    model = PrestamoMaterial
+    template_name = 'loan/material/listar_prestamos_material.html'
+    context_object_name = 'prestamos_material'

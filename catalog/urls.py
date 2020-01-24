@@ -14,6 +14,10 @@ urlpatterns = [
         name='home'
     ),
 
+    #################################################
+    ############ MATERIAL BIBLIOGRAFICO #############
+    #################################################
+
     ########## CRUD de Autor ##########
     path(
         route='listar_autor/',
@@ -104,7 +108,7 @@ urlpatterns = [
 
     ########## Detalles de Libro ##########
     path(
-        route='<slug:slug>/<int:pk>/',
+        route='detalle_libro/<slug:slug>/<int:pk>/',
         view= views.LibroDetailView.as_view(),
         name='libro_detail'
     ),
@@ -116,4 +120,36 @@ urlpatterns = [
         name='crear_ejemplar'
     ),
 
+    #################################################
+    ########### MATERIAL NO BIBLIOGRAFICO ###########
+    #################################################
+
+    ########## CRUD de Material ##########
+    path(
+        route='listar_material/',
+        view=views.ListadoMaterialView.as_view(),
+        name='listar_material'
+    ),
+    path(
+        route='crear_material/',
+        view=views.CrearMaterialView.as_view(),
+        name='crear_material'
+    ),
+    path(
+        route='editar_material/<int:pk>/',
+        view=views.ActualizarMaterialView.as_view(),
+        name='editar_material'
+    ),
+    path(
+        route='eliminar_material/<int:pk>/',
+        view=views.EliminarMaterialView.as_view(),
+        name='eliminar_material'
+    ),
+
+    ########## Detalles de Material ##########
+    path(
+        route='detalle_material/<slug:slug>/<int:pk>/',
+        view= views.MaterialDetailView.as_view(),
+        name='material_detail'
+    ),
 ]

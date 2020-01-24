@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import *
 
 
+########### MATERIAL BIBLIOGRAFICO ###########
+
 class EjemplarLibroInline(admin.StackedInline):
     model = EjemplarLibro
     extra = 0
@@ -14,21 +16,25 @@ class LibroAdmin(admin.ModelAdmin):
     filter_horizontal = ('autor',)
 
 
+########### MATERIAL NO BIBLIOGRAFICO ###########
+
 class EjemplarMaterialInline(admin.StackedInline):
     model = EjemplarMaterial
     extra = 0
     verbose_name_plural = 'Ejemplar Material'
 
 
-class NoBibliograficoAdmin(admin.ModelAdmin):
+class MaterialAdmin(admin.ModelAdmin):
     list_display = ('material', 'categoria')
     inlines = (EjemplarMaterialInline,)
 
 
+########### MATERIAL BIBLIOGRAFICO ###########
 admin.site.register(Autor)
 admin.site.register(Editorial)
 admin.site.register(Ubicacion)
 admin.site.register(Libro, LibroAdmin)
 admin.site.register(EjemplarLibro)
-admin.site.register(NoBibliografico, NoBibliograficoAdmin)
+########### MATERIAL NO BIBLIOGRAFICO ###########
+admin.site.register(Material, MaterialAdmin)
 admin.site.register(EjemplarMaterial)

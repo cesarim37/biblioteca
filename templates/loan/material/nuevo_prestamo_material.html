@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Crear Prestamo
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Nuevo Prestamo</strong>
+    </div>
+    <div class="card-body card-block">
+      
+      {% if tipo_usuario %}
+        <p>Nota: El tipo de prestamos para los usuarios de tipo {{ tipo_usuario }} esta restringido solo a sala.</p>
+      {% endif %}
+      <form action="" method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ prestamo_form.tipo_prestamo.label }} </label>
+          {{ prestamo_form.tipo_prestamo }}
+        </div>
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ prestamo_form.ejemplar.label }} </label>
+          {{ prestamo_form.ejemplar }}
+        </div>
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ prestamo_form.fecha_prestamo.label }} </label>
+          {{ prestamo_form.fecha_prestamo }}
+        </div>
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ prestamo_form.fecha_devolucion.label }} </label>
+          {{ prestamo_form.fecha_devolucion }}
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
