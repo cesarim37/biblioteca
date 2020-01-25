@@ -42,7 +42,7 @@ class PrestamoMaterial(ModeloBase):
 
     bibliotecario = models.ForeignKey(Bibliotecario, on_delete=models.CASCADE, related_name='material_bibliotecario')
     ejemplar_material = models.ForeignKey(EjemplarMaterial, on_delete=models.CASCADE, related_name='material_ejemplar')
-    lector_material = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='material_user')
+    lector = models.ForeignKey(Perfil, on_delete=models.CASCADE, related_name='material_user')
 
     TIPO_PRESTAMO = (
         ('aula', 'Aula'),
@@ -60,4 +60,4 @@ class PrestamoMaterial(ModeloBase):
         verbose_name_plural='Prestamo Material'
 
     def __str__(self):
-        return '%s, %s' % (self.ejemplar_material, self.lector_material)
+        return '%s, %s' % (self.ejemplar_material, self.lector)

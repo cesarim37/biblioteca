@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView, FormView
 
-from loan.forms import PrestamoForm, NuevoPrestamoForm, DevolucionForm
+from loan.forms import PrestamoForm, NuevoPrestamoForm, DevolucionForm, PrestamoMaterialForm, DevolucionMaterialForm
 from loan.models import Prestamo, PrestamoMaterial
 from catalog.models import EjemplarLibro
 from account.models import Perfil
@@ -49,10 +49,11 @@ class CrearPrestamoView(LoginRequiredMixin, View):
             lector = Perfil.objects.get(cedula_identidad=cedula)
 
             tipo_prestamo = data['tipo_prestamo']
-            fecha_prestamo = data['fecha_prestamo']
             fecha_devolucion = data['fecha_devolucion']
 
-            print(data)
+            now = datetime.now()
+            x = now.date()
+            fecha_prestamo = x
 
             prestamo = Prestamo(
                     bibliotecario=bibliotecario,
@@ -206,3 +207,98 @@ class ListadoPrestamoMaterialView(LoginRequiredMixin, ListView):
     model = PrestamoMaterial
     template_name = 'loan/material/listar_prestamos_material.html'
     context_object_name = 'prestamos_material'
+
+
+########### Prestamos/Devolución desde Material ###########
+
+class CrearPrestamoMaterialView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+
+        prestamo_form = PrestamoMaterialForm()
+
+        return render(request, 'loan/material/crear_prestamo_material.html', {
+            'prestamo_form': prestamo_form,
+        })
+
+        
+    def post(self, request, *args, **kwargs):
+
+        prestamo_form = PrestamoMaterialForm(request.POST)
+        
+        if prestamo_form.is_valid():
+            bibliotecario = self.request.user.perfil_usuario.bibliotecario_perfil
+            
+            data = prestamo_form.cleaned_data
+
+            ejemplar_material = data['ejemplar_material']
+
+            cedula = data['lector']
+            lector = Perfil.objects.get(cedula_identidad=cedula)
+
+            tipo_prestamo = data['tipo_prestamo']
+            fecha_devolucion = data['fecha_devolucion']
+
+            now = datetime.now()
+            x = now.date()
+            fecha_prestamo = x
+
+            prestamo = PrestamoMaterial(
+                    bibliotecario=bibliotecario,
+                    lector=lector,
+                    ejemplar_material=ejemplar_material,
+                    tipo_prestamo=tipo_prestamo,
+                    fecha_prestamo=fecha_prestamo,
+                    fecha_devolucion=fecha_devolucion,
+                )
+            prestamo.save()
+
+            ejemplar_material.estado = 'prestado'
+            ejemplar_material.save()
+        else:
+            return render(request, 'loan/material/crear_prestamo_material.html', {
+                'prestamo_form': prestamo_form,
+            })
+
+        return redirect('catalog:home')
+
+
+class DevolucionMaterialView(LoginRequiredMixin, View):
+
+    def get(self, request, *args, **kwargs):
+
+        devolucion_form = DevolucionMaterialForm()
+
+        return render(request, 'loan/material/devolucion_material.html', {
+            'devolucion_form': devolucion_form,
+        })
+
+        
+    def post(self, request, *args, **kwargs):
+
+        devolucion_form = DevolucionMaterialForm(request.POST)
+        
+        if devolucion_form.is_valid():
+            
+            bibliotecario = self.request.user.perfil_usuario.bibliotecario_perfil
+            
+            data = devolucion_form.cleaned_data
+
+            ejemplar_material = data['ejemplar_material']
+
+            devolucion = PrestamoMaterial.objects.get(ejemplar_material=ejemplar_material, fecha_devuelto=None)
+
+            now = datetime.now()
+            x = now.date()
+
+            devolucion.fecha_devuelto = x
+            devolucion.save()
+            ejemplar_material.estado = 'disponible'
+            ejemplar_material.save()
+
+        else:
+            return render(request, 'loan/material/crear_prestamo_material.html', {
+                'prestamo_form': prestamo_form,
+            })
+
+        return redirect('catalog:home')

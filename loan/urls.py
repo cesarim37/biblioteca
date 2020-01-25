@@ -47,4 +47,16 @@ urlpatterns = [
         name='listar_prestamos_material'
     ),
 
+    ########### Prestamos/Devolución de Material ###########
+    path(
+        route='crear_prestamo_material/',
+        view=views.CrearPrestamoMaterialView.as_view(),
+        name='crear_prestamo_material'
+    ),
+    path(
+        route='devolucion_material/',
+        view=views.DevolucionMaterialView.as_view(),
+        name='devolucion_material'
+    ),
+
 ]

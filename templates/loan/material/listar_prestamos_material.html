@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Listado de Prestamos
+Listado de Prestamos Material
 {% endblock %}
 
 {% block css %}
@@ -13,12 +13,12 @@ Listado de Prestamos
 
 {% block content %}
 
-{% if prestamos %}
+{% if prestamos_material %}
 
 <div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <strong class="card-title">Estadisticas de Prestamos</strong>
+      <strong class="card-title">Estadisticas de Prestamos Material</strong>
     </div>
     <div class="card-body">
       <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -26,7 +26,7 @@ Listado de Prestamos
           <tr>
             <th>bibliotecario</th>
             <th>ejemplar</th>
-            <th>lector</th>
+            <th>usuario</th>
             <th>tipo de prestamo</th>
             <th>fecha de prestamo</th>
             <th>fecha de devolucion</th>
@@ -34,10 +34,10 @@ Listado de Prestamos
           </tr>
         </thead>
         <tbody>
-          {% for prestamo in prestamos %}
+          {% for prestamo in prestamos_material %}
           <tr>
             <td>{{ prestamo.bibliotecario }}</td>
-            <td>{{ prestamo.ejemplar.cota }}</td>
+            <td>{{ prestamo.ejemplar_material }}</td>
             <td>{{ prestamo.lector }}</td>
             <td>{{ prestamo.tipo_prestamo }}</td>
             <td>{{ prestamo.fecha_prestamo }}</td>
