@@ -1,12 +1,14 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import authenticate, views as auth_views, login as auth_login
+from django.contrib.auth import authenticate, views as auth_views,\
+    login as auth_login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView, FormView
+from django.views.generic import View, DetailView, ListView, FormView
 
-from account.forms import EstudianteForm, PersonalForm, VisitanteForm, BibliotecarioForm, LoginForm
+from account.forms import EstudianteForm, PersonalForm, VisitanteForm,\
+    BibliotecarioForm, LoginForm
 from account.models import Perfil, Estudiante
 
 
@@ -23,49 +25,28 @@ class CrearEstudianteView(LoginRequiredMixin, FormView):
 
 
 class ActualizarEstudianteView(LoginRequiredMixin, View):
-    
     def get(self, request, pk, *args, **kwargs):
-
-        estudiante = Estudiante.objects.get(pk=pk)
-        
-        initial ={
-            'first_name': estudiante.perfil.usuario.first_name,
-            'last_name': estudiante.perfil.usuario.last_name,
-            'cedula_identidad': estudiante.perfil.cedula_identidad,
-            'grado': estudiante.grado,
-            'seccion': estudiante.seccion,
-            'turno': estudiante.turno,
-        }
-        
-        estudiante_form = EstudianteForm(initial=initial)
+        estudiante_form = EstudianteForm(initial={
+            'estudiante': get_object_or_404(Estudiante, pk=pk),
+            'update': False
+        })
 
         return render(request, 'account/crear_estudiante.html', {
             'form': estudiante_form,
         })
 
-
     def post(self, request, pk, *args, **kwargs):
-
-        estudiante_form = EstudianteForm(request.POST)
+        estudiante_form = EstudianteForm(request.POST, initial={
+            'estudiante': get_object_or_404(Estudiante, pk=pk),
+            'update': True
+        })
 
         if estudiante_form.is_valid():
-
-            estudiante = Estudiante.objects.get(pk=pk)
-
-            data = self.cleaned_data
-
-            first_name = data['first_name']
-            last_name = data['last_name']
-            cedula_identidad = data['cedula_identidad']
-            grado = data['grado']
-            seccion = data['seccion']
-            turno = data['turno']
-            
-            print(estudiante)
+            estudiante_form.save()
         else:
             return render(request, 'account/crear_estudiante.html', {
                 'form': estudiante_form,
-                })
+            })
 
         return redirect('catalog:home')
 
@@ -124,7 +105,7 @@ class LoginView(auth_views.LoginView):
     form_class = LoginForm
 
     def form_valid(self, form):
-        """Security check complete. Log the user in."""
+        # Security check complete. Log the user in.
 
         cedula = form.cleaned_data.get('cedula')
         password = form.cleaned_data.get('password')
@@ -139,9 +120,11 @@ class LoginView(auth_views.LoginView):
             if user.is_active:
                 auth_login(self.request, user)
             else:
-                error_messages.append('usuario no activo')
+                pass
+                # error_messages.append('usuario no activo')
         else:
-            ValidationError(_('Invalid value'), code='invalid')
+            pass
+            # ValidationError(_('Invalid value'), code='invalid')
 
         return HttpResponseRedirect(self.get_success_url())
 
