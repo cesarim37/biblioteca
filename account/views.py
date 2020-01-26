@@ -22,11 +22,52 @@ class CrearEstudianteView(LoginRequiredMixin, FormView):
         return super().form_valid(form)
 
 
-# class ActualizarEstudianteView(UpdateView):
-#     model = Estudiante
-#     form_class = EstudianteForm
-#     template_name = 'account/crear_estudiante.html'
-#     success_url = reverse_lazy('account:listar_perfil')
+class ActualizarEstudianteView(LoginRequiredMixin, View):
+    
+    def get(self, request, pk, *args, **kwargs):
+
+        estudiante = Estudiante.objects.get(pk=pk)
+        
+        initial ={
+            'first_name': estudiante.perfil.usuario.first_name,
+            'last_name': estudiante.perfil.usuario.last_name,
+            'cedula_identidad': estudiante.perfil.cedula_identidad,
+            'grado': estudiante.grado,
+            'seccion': estudiante.seccion,
+            'turno': estudiante.turno,
+        }
+        
+        estudiante_form = EstudianteForm(initial=initial)
+
+        return render(request, 'account/crear_estudiante.html', {
+            'form': estudiante_form,
+        })
+
+
+    def post(self, request, pk, *args, **kwargs):
+
+        estudiante_form = EstudianteForm(request.POST)
+
+        if estudiante_form.is_valid():
+
+            estudiante = Estudiante.objects.get(pk=pk)
+
+            data = self.cleaned_data
+
+            first_name = data['first_name']
+            last_name = data['last_name']
+            cedula_identidad = data['cedula_identidad']
+            grado = data['grado']
+            seccion = data['seccion']
+            turno = data['turno']
+            
+            print(estudiante)
+        else:
+            return render(request, 'account/crear_estudiante.html', {
+                'form': estudiante_form,
+                })
+
+        return redirect('catalog:home')
 
 
 class CrearPersonalView(LoginRequiredMixin, FormView):
