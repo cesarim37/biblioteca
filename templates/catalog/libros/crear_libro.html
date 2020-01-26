@@ -47,15 +47,13 @@ Nuevo Libro
         <div class="form-group">
           <label class=" form-control-label"> {{ form.autor.label }} </label>
           {{ form.autor }}
-          <a href="{% url 'catalog:crear_autor' %}" target="_blank"><small class="form-text text-muted">Agregar autor</small></a>
-          <a href="javascript:window.open('{% url 'catalog:nuevo_autor' %}','','toolbar=yes');void 0"><small class="form-text text-muted">Agregar autor2</small></a>
-
+          <a href="{% url 'catalog:crear_autor' %}"><small class="form-text text-muted">Agregar autor</small></a>
         </div>
         
         <div class="form-group">
           <label class=" form-control-label"> {{ form.editorial.label }} </label>
           {{ form.editorial }}
-          <small class="form-text text-muted">Agregar editorial</small>
+          <a href="{% url 'catalog:crear_editorial' %}"><small class="form-text text-muted">Agregar editorial</small></a>
         </div>
 
         <div class="form-group">
@@ -67,6 +65,7 @@ Nuevo Libro
         <div class="form-group">
           <label class=" form-control-label"> {{ form.ubicacion.label }} </label>
           {{ form.ubicacion }}
+          <a href="{% url 'catalog:crear_ubicacion' %}"><small class="form-text text-muted">Agregar ubicación</small></a>
         </div>
 
         <button type="submit" class="btn btn-primary">Registrar</button>

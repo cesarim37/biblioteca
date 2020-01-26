@@ -3,36 +3,43 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView
 
-from catalog.forms import AutorForm, LibroForm, EjemplarLibroForm
-from catalog.models import Autor, Libro, EjemplarLibro
+from catalog.forms import AutorForm, EditorialForm, UbicacionForm, LibroForm, EjemplarLibroForm, MaterialForm, EjemplarMaterialForm
+from catalog.models import Autor, Editorial, Ubicacion, Libro, EjemplarLibro, Material
+
 
 def home(request):
     return render(request, 'home.html', {})
 
+##############################################
+########### MATERIAL BIBLIOGRAFICO ###########
+##############################################
 
-class CrearAutorView(LoginRequiredMixin, CreateView):
+########## CRUD de Autores ##########
 
-    template_name = 'catalog/crear_autor.html'
-    form_class = AutorForm
-    success_url = reverse_lazy('catalog:listar_autor')
-
-
-class ListadoAutorView(ListView):
+class ListadoAutorView(LoginRequiredMixin, ListView):
     model = Autor
-    template_name = 'catalog/listar_autor.html'
+    template_name = 'catalog/autor/listar_autor.html'
     context_object_name = 'autores'
     queryset = Autor.objects.filter(status = True)
 
 
-class ActualizarAutorView(UpdateView):
-    model = Autor
+class CrearAutorView(LoginRequiredMixin, CreateView):
+
+    template_name = 'catalog/autor/crear_autor.html'
     form_class = AutorForm
-    template_name = 'catalog/crear_autor.html'
     success_url = reverse_lazy('catalog:listar_autor')
 
 
-class EliminarAutorView(DeleteView):
+class ActualizarAutorView(LoginRequiredMixin, UpdateView):
     model = Autor
+    form_class = AutorForm
+    template_name = 'catalog/autor/crear_autor.html'
+    success_url = reverse_lazy('catalog:listar_autor')
+
+
+class EliminarAutorView(LoginRequiredMixin, DeleteView):
+    model = Autor
+    template_name = 'catalog/autor/autor_confirm_delete.html'
 
     def post(self,request,pk,*args,**kwargs):
         object = Autor.objects.get(id = pk)
@@ -41,29 +48,100 @@ class EliminarAutorView(DeleteView):
         return redirect('catalog:listar_autor')
 
 
-class CrearLibroView(CreateView):
-    
-    template_name = 'catalog/crear_libro.html'
-    form_class = LibroForm
-    success_url = reverse_lazy('catalog:listar_libros')
+########## CRUD de Editoriales ##########
+
+class ListadoEditorialView(LoginRequiredMixin, ListView):
+    model = Editorial
+    template_name = 'catalog/editorial/listar_editorial.html'
+    context_object_name = 'editoriales'
+    queryset = Editorial.objects.filter(status = True)
 
 
-class ListadoLibrosView(ListView):
+class CrearEditorialView(LoginRequiredMixin, CreateView):
+
+    template_name = 'catalog/editorial/crear_editorial.html'
+    form_class = EditorialForm
+    success_url = reverse_lazy('catalog:listar_editorial')
+
+
+class ActualizarEditorialView(LoginRequiredMixin, UpdateView):
+    model = Editorial
+    form_class = EditorialForm
+    template_name = 'catalog/editorial/crear_editorial.html'
+    success_url = reverse_lazy('catalog:listar_editorial')
+
+
+class EliminarEditorialView(LoginRequiredMixin, DeleteView):
+    model = Editorial
+    template_name = 'catalog/editorial/editorial_confirm_delete.html'
+
+    def post(self,request,pk,*args,**kwargs):
+        object = Editorial.objects.get(id = pk)
+        object.status = False
+        object.save()
+        return redirect('catalog:listar_editorial')
+
+
+########## CRUD de Ubicación ##########
+
+class ListadoUbicacionView(LoginRequiredMixin, ListView):
+    model = Ubicacion
+    template_name = 'catalog/ubicacion/listar_ubicacion.html'
+    context_object_name = 'ubicaciones'
+    queryset = Ubicacion.objects.filter(status = True)
+
+
+class CrearUbicacionView(LoginRequiredMixin, CreateView):
+
+    template_name = 'catalog/ubicacion/crear_ubicacion.html'
+    form_class = UbicacionForm
+    success_url = reverse_lazy('catalog:listar_ubicacion')
+
+
+class ActualizarUbicacionView(LoginRequiredMixin, UpdateView):
+    model = Ubicacion
+    form_class = UbicacionForm
+    template_name = 'catalog/ubicacion/crear_ubicacion.html'
+    success_url = reverse_lazy('catalog:listar_ubicacion')
+
+
+class EliminarUbicacionView(LoginRequiredMixin, DeleteView):
+    model = Ubicacion
+    template_name = 'catalog/ubicacion/ubicacion_confirm_delete.html'
+
+    def post(self,request,pk,*args,**kwargs):
+        object = Ubicacion.objects.get(id = pk)
+        object.status = False
+        object.save()
+        return redirect('catalog:listar_ubicacion')
+
+
+########## CRUD de Libros ##########
+
+class ListadoLibrosView(LoginRequiredMixin, ListView):
     model = Libro
-    template_name = 'catalog/listar_libro.html'
+    template_name = 'catalog/libros/listar_libro.html'
     context_object_name = 'libros'
     queryset = Libro.objects.filter(status = True)
 
 
-class ActualizarLibroView(UpdateView):
-    model = Libro
+class CrearLibroView(LoginRequiredMixin, CreateView):
+    
+    template_name = 'catalog/libros/crear_libro.html'
     form_class = LibroForm
-    template_name = 'catalog/crear_libro.html'
     success_url = reverse_lazy('catalog:listar_libros')
 
 
-class EliminarLibroView(DeleteView):
+class ActualizarLibroView(LoginRequiredMixin, UpdateView):
     model = Libro
+    form_class = LibroForm
+    template_name = 'catalog/libros/crear_libro.html'
+    success_url = reverse_lazy('catalog:listar_libros')
+
+
+class EliminarLibroView(LoginRequiredMixin, DeleteView):
+    model = Libro
+    template_name = 'catalog/libros/libro_confirm_delete.html'
 
     def post(self,request,pk,*args,**kwargs):
         object = Libro.objects.get(id = pk)
@@ -72,39 +150,102 @@ class EliminarLibroView(DeleteView):
         return redirect('catalog:listar_libros')
 
 
-class LibroDetailView(DetailView):
+########## Detalles de Libro ##########
+
+class LibroDetailView(LoginRequiredMixin, DetailView):
     model = Libro
+    template_name = 'catalog/libros/libro_detail.html'
 
 
-class CrearEjemplarView(CreateView):
+########## CRUD de Ejemplares ##########
+
+class CrearEjemplarView(LoginRequiredMixin, CreateView):
     
     template_name = 'catalog/crear_ejemplar.html'
     form_class = EjemplarLibroForm
     success_url = reverse_lazy('catalog:listar_libros')
     
 
-class NuevoAutorView(View):
+########## CRUD de Material no Bibliografico ##########
 
-    def get(self, request, *args, **kwargs):
+# class ListadoLibrosView(LoginRequiredMixin, ListView):
+#     model = Libro
+#     template_name = 'catalog/listar_libro.html'
+#     context_object_name = 'libros'
+#     queryset = Libro.objects.filter(status = True)
 
-        autor_form = AutorForm()
+# class CrearMaterialView(LoginRequiredMixin, CreateView):
+    
+#     template_name = 'catalog/crear_material.html'
+#     form_class = MaterialForm
+#     success_url = reverse_lazy('catalog:listar_libros')
 
-        return render(request, 'catalog/nuevo_autor.html', {
-            'autor_form': autor_form,
-        })
+# class ActualizarLibroView(LoginRequiredMixin, UpdateView):
+#     model = Libro
+#     form_class = LibroForm
+#     template_name = 'catalog/crear_libro.html'
+#     success_url = reverse_lazy('catalog:listar_libros')
 
-        
-    def post(self, request, *args, **kwargs):
 
-        autor_form = AutorForm(request.POST)
-        
-        if autor_form.is_valid():
-            
-            data = autor_form.cleaned_data
+# class EliminarLibroView(LoginRequiredMixin, DeleteView):
+#     model = Libro
 
-            autor = Autor(**data)
-            autor.save()
+#     def post(self,request,pk,*args,**kwargs):
+#         object = Libro.objects.get(id = pk)
+#         object.status = False
+#         object.save()
+#         return redirect('catalog:listar_libros')
 
-        return render(request, 'catalog/nuevo_autor.html', {
-            'autor_form': autor_form,
-        })
+
+#################################################
+########### MATERIAL NO BIBLIOGRAFICO ###########
+#################################################
+
+########## CRUD de Material ##########
+
+class ListadoMaterialView(LoginRequiredMixin, ListView):
+    model = Material
+    template_name = 'catalog/material/listar_material.html'
+    context_object_name = 'materiales'
+    queryset = Material.objects.filter(status = True)
+
+
+class CrearMaterialView(LoginRequiredMixin, CreateView):
+    
+    template_name = 'catalog/material/crear_material.html'
+    form_class = MaterialForm
+    success_url = reverse_lazy('catalog:listar_material')
+
+
+class ActualizarMaterialView(LoginRequiredMixin, UpdateView):
+    model = Material
+    form_class = MaterialForm
+    template_name = 'catalog/material/crear_material.html'
+    success_url = reverse_lazy('catalog:listar_material')
+
+
+class EliminarMaterialView(LoginRequiredMixin, DeleteView):
+    model = Material
+    template_name = 'catalog/material/material_confirm_delete.html'
+
+    def post(self,request,pk,*args,**kwargs):
+        object = Material.objects.get(id = pk)
+        object.status = False
+        object.save()
+        return redirect('catalog:listar_material')
+
+
+########## Detalles de Material ##########
+
+class MaterialDetailView(LoginRequiredMixin, DetailView):
+    model = Material
+    template_name = 'catalog/material/material_detail.html'
+
+
+########## CRUD de Ejemplares Material ##########
+
+class CrearEjemplarMaterialView(LoginRequiredMixin, CreateView):
+    
+    template_name = 'catalog/crear_ejemplar_material.html'
+    form_class = EjemplarMaterialForm
+    success_url = reverse_lazy('catalog:listar_material')

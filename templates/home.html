@@ -1,9 +1,26 @@
 {% extends 'layout.html' %}
+{% load static %}
 
 {% block titulo %}Inicio{% endblock %}
 
 {% block content %}
 
-<h1>Biblioteca</h1>
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title"><h2>Mision</h2></strong>
+  </div>
+  <div class="card-body">
+    <p class="card-text">La Escuela Básica “Campo Elías” permite la participación de todos los entes de la colectividad ejidense Promueve la preservación de los espacios ecológicos.</p>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <strong class="card-title"><h2>Vision</h2></strong>
+  </div>
+  <div class="card-body">
+    <p class="card-text">La Escuela Básica “Campo Elías” es un ente formador y orientador del proceso socializador del Sistema Educativo Bolivariano impartiendo conocimientos hacia el aprendizaje humanístico, significativo</p>
+  </div>
+</div>
 
 {% endblock content %}

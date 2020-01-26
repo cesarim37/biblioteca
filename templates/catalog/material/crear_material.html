@@ -1,0 +1,75 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Nuevo Material
+{% endblock %}
+
+{% block css %}
+  <style type="text/css">
+
+    .custom-file-label:after{
+      content: "Elegir";
+    }
+
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body card-block">
+
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="id_titulo" class="form-control-label"> {{ form.material.label }} </label>
+          {{ form.material }}
+        </div>
+        
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.descripcion.label }} </label>
+          {{ form.descripcion }}
+        </div>
+
+        <div class="form-group">
+          <label class=" form-control-label"> {{ form.categoria.label }} </label>
+          {{ form.categoria }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <button type="reset" class="btn btn-danger">Cancelar</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'assets/js/dist_lib/chosen/chosen.jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/bs-custom-file-input.min.js' %}"></script>
+
+<script>
+
+jQuery(document).ready(function() {
+  jQuery(".standardSelect").chosen({
+    disable_search_threshold: 10,
+    no_results_text: "Oops, nothing found!",
+    width: "100%"
+  });
+});
+
+jQuery(document).ready(function(){
+  bsCustomFileInput.init()
+});
+
+</script>
+
+{% endblock %}

@@ -1,20 +1,31 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
+{% load static %}
 
 {% block titulo %}
-<title>Nuevo</title>
+Nuevo Bibliotecario
+{% endblock %}
+
+{% block css %}
 {% endblock %}
 
 {% block content %}
 
-crear bibliotecario
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Formulario de Registro</strong>
+    </div>
+    <div class="card-body card-block">
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
+      <form action="" method="POST">
+        {% csrf_token %}
 
-    {{ form.as_p }}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
+</div>
 
-    <button class="btn btn-primary" type="submit">Guardar</button>
-
-</form>
 
 {% endblock %}

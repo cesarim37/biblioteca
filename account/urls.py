@@ -2,7 +2,7 @@
 
 # Django
 from django.urls import path
-# from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 
 # Views
 from account import views
@@ -46,4 +46,15 @@ urlpatterns = [
         name='perfil_detail'
     ),
 
+
+    path(
+        route='login/',
+        view=views.LoginView.as_view(),
+        name='login'
+    ),
+    path(
+        route='logout/',
+        view=views.LogoutView.as_view(),
+        name='logout'
+    ),
 ]

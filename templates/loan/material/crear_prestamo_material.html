@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Crear Prestamo Material
+{% endblock %}
+
+{% block css %}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="col-xs-12 offset-sm-3 col-sm-6">
+  <div class="card">
+    <div class="card-header">
+      <strong>Nuevo Prestamo Material</strong>
+    </div>
+    <div class="card-body card-block">
+
+      <form action="" method="POST">
+        {% csrf_token %}
+        
+        {{ prestamo_form.as_p }}
+
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
