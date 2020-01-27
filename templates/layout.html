@@ -98,15 +98,16 @@
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
               <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_estudiante' %}">Registrar Estudiante</a></li>
               <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_personal' %}">Registrar Personal</a></li>
               <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_visitante' %}">Registrar Visitante</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
               <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_bibliotecario' %}">Registrar Bibliotecario</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:listar_bibliotecario' %}">Listado de Bibliotecarios</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Estadisticas</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Historial de Préstamos</a>
             <ul class="sub-menu children dropdown-menu">
               <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:listar_prestamos' %}">Bibliografico</a></li>
               <li><i class="fa fa-list-ul"></i><a href="{% url 'loan:listar_prestamos_material' %}">No Bibliografico</a></li>
@@ -141,7 +142,11 @@
           <div class="header-left">
             <div class="user-area dropdown float-right">
               <a href="#" class="dropdown-toggle active" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img class="user-avatar rounded-circle" src="{% static 'images/perfil.png' %}" alt="User Avatar">
+                {% if request.user.perfil_usuario.bibliotecario_perfil.imagen %}
+                  <img class="user-avatar rounded-circle" src="{{ request.user.perfil_usuario.bibliotecario_perfil.imagen.url }}" alt="User Avatar">
+                {% else %}
+                  <img class="user-avatar rounded-circle" src="{% static 'images/perfil.png' %}" alt="User Avatar">
+                {% endif %}
               </a>
 
               <div class="user-menu dropdown-menu">

@@ -14,7 +14,8 @@ from account.forms import EstudianteForm, PersonalForm, VisitanteForm,\
 from account.models import Perfil, Estudiante, Personal, Visitante
 
 
-class ListadoPerfilView(ListView):
+class ListadoPerfilView(PermissionRequiredMixin, ListView):
+    permission_required = ['account.view_perfil']
     
     model = Perfil
     template_name = 'account/listar_perfil.html'
@@ -22,7 +23,8 @@ class ListadoPerfilView(ListView):
     queryset = Perfil.objects.filter(status=True).exclude(tipo_usuario='bibliotecario')
 
 
-class CrearEstudianteView(FormView):
+class CrearEstudianteView(PermissionRequiredMixin, FormView):
+    permission_required = ['account.view_estudiante', 'account.add_estudiante']
 
     template_name = 'account/crear_estudiante.html'
     form_class = EstudianteForm
@@ -35,7 +37,8 @@ class CrearEstudianteView(FormView):
         return super().form_valid(form)
 
 
-class ActualizarEstudianteView(FormView):
+class ActualizarEstudianteView(PermissionRequiredMixin, FormView):
+    permission_required = ['account.view_estudiante', 'account.change_estudiante']
 
     template_name = 'account/crear_estudiante.html'
     form_class = EstudianteForm
@@ -55,7 +58,9 @@ class ActualizarEstudianteView(FormView):
         return super().form_valid(form)
 
 
-# class ActualizarEstudianteView(View):
+# class ActualizarEstudianteView(PermissionRequiredMixin, View):
+#     permission_required = ['account.view_estudiante']
+
 #     def get(self, request, pk, *args, **kwargs):
 #         estudiante_form = EstudianteForm(initial={
 #             'estudiante': get_object_or_404(Estudiante, pk=pk),
@@ -67,6 +72,8 @@ class ActualizarEstudianteView(FormView):
 #         })
 
 #     def post(self, request, pk, *args, **kwargs):
+#         permission_required = ['account.add_estudiante', 'account.change_estudiante']
+
 #         estudiante_form = EstudianteForm(request.POST, initial={
 #             'estudiante': get_object_or_404(Estudiante, pk=pk),
 #             'update': True
@@ -82,7 +89,8 @@ class ActualizarEstudianteView(FormView):
 #         return redirect('catalog:home')
 
 
-class CrearPersonalView(FormView):
+class CrearPersonalView(PermissionRequiredMixin, FormView):
+    permission_required = ['account.view_personal', 'account.add_personal']
 
     template_name = 'account/crear_personal.html'
     form_class = PersonalForm
@@ -95,7 +103,7 @@ class CrearPersonalView(FormView):
         return super().form_valid(form)
 
 
-class ActualizarPersonalView(FormView):
+class ActualizarPersonalView(PermissionRequiredMixin, FormView):
 
     template_name = 'account/crear_personal.html'
     form_class = PersonalForm
@@ -115,7 +123,8 @@ class ActualizarPersonalView(FormView):
         return super().form_valid(form)
 
 
-class CrearVisitanteView(FormView):
+class CrearVisitanteView(PermissionRequiredMixin, FormView):
+    permission_required = ['account.view_visitante', 'account.add_visitante']
 
     template_name = 'account/crear_visitante.html'
     form_class = VisitanteForm
@@ -128,7 +137,7 @@ class CrearVisitanteView(FormView):
         return super().form_valid(form)
 
 
-class ActualizarVisitanteView(FormView):
+class ActualizarVisitanteView(PermissionRequiredMixin, FormView):
 
     template_name = 'account/crear_visitante.html'
     form_class = VisitanteForm
@@ -148,7 +157,17 @@ class ActualizarVisitanteView(FormView):
         return super().form_valid(form)
 
 
-class CrearBibliotecarioView(FormView):
+class ListadoBibliotecarioView(PermissionRequiredMixin, ListView):
+    permission_required = ['account.view_bibliotecario']
+    
+    model = Perfil
+    template_name = 'account/listar_bibliotecario.html'
+    context_object_name = 'perfiles'
+    queryset = Perfil.objects.filter(status=True,tipo_usuario='bibliotecario')
+
+
+class CrearBibliotecarioView(PermissionRequiredMixin, FormView):
+    permission_required = ['account.view_bibliotecario', 'account.add_bibliotecario']
 
     template_name = 'account/crear_bibliotecario.html'
     form_class = BibliotecarioForm
@@ -161,14 +180,9 @@ class CrearBibliotecarioView(FormView):
         return super().form_valid(form)
 
 
-class ListadoBibliotecarioView(ListView):
-    model = Perfil
-    template_name = 'account/listar_bibliotecario.html'
-    context_object_name = 'perfiles'
-    queryset = Perfil.objects.filter(status=True,tipo_usuario='bibliotecario')
+class EliminarPerfilView(PermissionRequiredMixin, DeleteView):
+    permission_required = ['account.view_perfil', 'account.delete_perfil']
 
-
-class EliminarPerfilView(DeleteView):
     model = Perfil
     template_name = 'account/perfil_confirm_delete.html'
 
@@ -179,7 +193,9 @@ class EliminarPerfilView(DeleteView):
         return redirect('account:listar_perfil')
 
 
-class PerfilDetailView(DetailView):
+class PerfilDetailView(PermissionRequiredMixin, DetailView):
+    permission_required = ['account.view_perfil']
+
     model = Perfil
 
 
