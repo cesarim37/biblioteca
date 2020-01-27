@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Listado de Editoriales
+Listado de Bibliotecarios
 {% endblock %}
 
 {% block css %}
@@ -13,36 +13,34 @@ Listado de Editoriales
 
 {% block content %}
 
-{% if editoriales %}
+{% if perfiles %}
 
 <div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <strong class="card-title">Listado de Editoriales</strong>
+      <strong class="card-title">Listado de Bibliotecarios</strong>
     </div>
     <div class="card-body">
       <table id="bootstrap-data-table" class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th>Editorial</th>
-            <th>Libros</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Cedula</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {% for editorial in editoriales %}
-          <tr>
-            <td>{{ editorial.editorial }}</td>
-            <td>
-              {% for libro in editorial.libro_editorial.all %}
-              <li>{{ libro }}</li>
-              {% endfor %}
-            </td>
-            <td>
-              <a href="{% url 'catalog:editar_editorial' editorial.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
-              <a href="{% url 'catalog:eliminar_editorial' editorial.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fa fa-trash-o"></i></a>
-            </td>
-          </tr>
+          {% for perfil in perfiles %}
+            <tr>
+              <td>{{ perfil.usuario.first_name }}</td>
+              <td>{{ perfil.usuario.last_name }}</td>
+              <td> <a href="{% url 'account:perfil_detail' slug=perfil.slug pk=perfil.pk %}">{{ perfil.cedula_identidad }}</a> </td>
+              <td>                
+                <a href="#" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o"></i></a>                
+                <a href="#" class="btn btn-outline-primary"><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>
@@ -51,7 +49,7 @@ Listado de Editoriales
 </div>
 
 {% else %}
-<h3>No existen editoriales registradas</h3>
+<h3>No existen bibliotecarios registrados</h3>
 {% endif %}
 
 {% endblock %}
@@ -70,9 +68,4 @@ Listado de Editoriales
 <script src="{% static 'assets/js/dist_lib/data-table/buttons.colVis.min.js' %}"></script>
 <script src="{% static 'assets/js/init/datatables-init.js' %}"></script>
 
-<script>
-  function () {
-    $('[data-toggle="tooltip"]').tooltip()
-  };
-</script>
 {% endblock %}

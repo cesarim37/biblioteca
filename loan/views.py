@@ -1,5 +1,4 @@
 from datetime import datetime
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import View, CreateView, UpdateView, DeleteView, DetailView, ListView, FormView
@@ -14,7 +13,7 @@ from account.models import Perfil
 ########### MATERIAL BIBLIOGRAFICO ###########
 ##############################################
 
-class ListadoPrestamoView(LoginRequiredMixin, ListView):
+class ListadoPrestamoView(ListView):
     model = Prestamo
     template_name = 'loan/listar_prestamos.html'
     context_object_name = 'prestamos'
@@ -22,7 +21,7 @@ class ListadoPrestamoView(LoginRequiredMixin, ListView):
 
 ########### Prestamos/Devolución desde Inicio ###########
 
-class CrearPrestamoView(LoginRequiredMixin, View):
+class CrearPrestamoView(View):
 
     def get(self, request, *args, **kwargs):
 
@@ -75,7 +74,7 @@ class CrearPrestamoView(LoginRequiredMixin, View):
         return redirect('catalog:home')
 
 
-class DevolucionView(LoginRequiredMixin, View):
+class DevolucionView(View):
 
     def get(self, request, *args, **kwargs):
 
@@ -98,7 +97,7 @@ class DevolucionView(LoginRequiredMixin, View):
 
             cota = data['ejemplar']
             ejemplar = EjemplarLibro.objects.get(cota=cota)
-
+            
             devolucion = Prestamo.objects.get(ejemplar=ejemplar, fecha_devuelto=None)
 
             now = datetime.now()
@@ -110,8 +109,8 @@ class DevolucionView(LoginRequiredMixin, View):
             ejemplar.save()
 
         else:
-            return render(request, 'loan/crear_prestamo.html', {
-                'prestamo_form': prestamo_form,
+            return render(request, 'loan/devolucion.html', {
+                'devolucion_form': devolucion_form,
             })
 
         return redirect('catalog:home')
@@ -119,7 +118,7 @@ class DevolucionView(LoginRequiredMixin, View):
 
 ########### Prestamos/Devolución desde Usuario ###########
 
-class NuevoPrestamoView(LoginRequiredMixin, View):
+class NuevoPrestamoView(View):
 
     def get(self, request, pk, slug, *args, **kwargs):
 
@@ -127,7 +126,6 @@ class NuevoPrestamoView(LoginRequiredMixin, View):
         prestamo_form = NuevoPrestamoForm()
         lector = Perfil.objects.get(pk=pk)
         tipo_usuario = lector.tipo_usuario
-        print('paso!')
         print(lector)
         print(tipo_usuario)
 
@@ -179,7 +177,7 @@ class NuevoPrestamoView(LoginRequiredMixin, View):
         return redirect('catalog:home')
 
 
-class DevolverPrestamoView(LoginRequiredMixin, View):
+class DevolverPrestamoView(View):
 
     def get(self, request, pk_ejemplar, pk_lector, *args, **kwargs):
 
@@ -203,7 +201,7 @@ class DevolverPrestamoView(LoginRequiredMixin, View):
 ########### MATERIAL NO BIBLIOGRAFICO ###########
 #################################################
 
-class ListadoPrestamoMaterialView(LoginRequiredMixin, ListView):
+class ListadoPrestamoMaterialView(ListView):
     model = PrestamoMaterial
     template_name = 'loan/material/listar_prestamos_material.html'
     context_object_name = 'prestamos_material'
@@ -211,7 +209,7 @@ class ListadoPrestamoMaterialView(LoginRequiredMixin, ListView):
 
 ########### Prestamos/Devolución desde Material ###########
 
-class CrearPrestamoMaterialView(LoginRequiredMixin, View):
+class CrearPrestamoMaterialView(View):
 
     def get(self, request, *args, **kwargs):
 
@@ -263,7 +261,7 @@ class CrearPrestamoMaterialView(LoginRequiredMixin, View):
         return redirect('catalog:home')
 
 
-class DevolucionMaterialView(LoginRequiredMixin, View):
+class DevolucionMaterialView(View):
 
     def get(self, request, *args, **kwargs):
 

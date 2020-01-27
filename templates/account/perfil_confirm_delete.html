@@ -2,12 +2,10 @@
 {% load static %}
 
 {% block titulo %}
-Crear Préstamo
+Confirmacion eliminar perfil
 {% endblock %}
 
 {% block css %}
-<style type="text/css">
-</style>
 {% endblock %}
 
 {% block content %}
@@ -15,17 +13,14 @@ Crear Préstamo
 <div class="col-xs-12 offset-sm-3 col-sm-6">
   <div class="card">
     <div class="card-header">
-      <strong>Nuevo Préstamo</strong>
+      <strong>Eliminar </strong>
     </div>
     <div class="card-body card-block">
 
       <form action="" method="POST">
         {% csrf_token %}
-        
-        {{ prestamo_form.as_p }}
-
-        <button class="btn btn-primary" type="submit">Guardar</button>
-
+          <p><strong>¿Desea eliminar el registro {{ object }}?</strong></p>
+          <button type="submit" class="btn btn-danger">Confirmar</button>
       </form>
     </div>
   </div>

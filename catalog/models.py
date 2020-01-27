@@ -71,7 +71,7 @@ class Libro(ModeloBase):
         ('recreativos', 'Recreativos'),
         ('textos', 'Textos'),
         ('pedagogicos', 'Pedagógicos'),
-        ('publicaciones periodicas', 'Publicaciones Periodicas'),
+        ('publicaciones periodicas', 'Publicaciones Periódicas'),
         ('seccion docentes', 'Sección Docentes'),
     )
 
@@ -101,13 +101,13 @@ class EjemplarLibro(ModeloBase):
         ('regular', 'Regular'),
         ('dañado', 'Dañado'),
     )
-    condicion = models.CharField(max_length=20, choices=CONDICION, blank=True, default='excelente', help_text='Condicion del ejemplar')
+    condicion = models.CharField(max_length=20, choices=CONDICION, blank=True, help_text='Condicion del ejemplar')
 
     ADQUIRIDO = (
         ('donacion', 'Donacion'),
         ('comprado', 'Comprado'),
     )
-    adquirido = models.CharField(max_length=20, choices=ADQUIRIDO, blank=True, default='donacion', help_text='Como fue adquirido el ejemplar')
+    adquirido = models.CharField(max_length=20, choices=ADQUIRIDO, blank=True, help_text='Como fue adquirido el ejemplar')
 
     ESTADO = (
         ('disponible', 'Disponible'),
@@ -142,7 +142,7 @@ class Material(ModeloBase):
     CATEGORIA = (
         ('mapas', 'Mapas'),
         ('meni', 'Material Educativo no Impreso'),
-        ('juegos', 'Juegos Didacticos'),
+        ('juegos', 'Juegos Didácticos'),
         ('otros', 'Otros'),
     )
     categoria = models.CharField(max_length=20, choices=CATEGORIA, blank=True)
@@ -167,13 +167,13 @@ class EjemplarMaterial(ModeloBase):
         ('regular', 'Regular'),
         ('dañado', 'Dañado'),
     )
-    condicion = models.CharField(max_length=20, choices=CONDICION, blank=True, default='excelente', help_text='Condicion del ejemplar')
+    condicion = models.CharField(max_length=20, choices=CONDICION, blank=True, help_text='Condicion del ejemplar')
 
     ADQUIRIDO = (
         ('donacion', 'Donacion'),
         ('comprado', 'Comprado'),
     )
-    adquirido = models.CharField(max_length=20, choices=ADQUIRIDO, blank=True, default='donacion', help_text='Como fue adquirido el ejemplar')
+    adquirido = models.CharField(max_length=20, choices=ADQUIRIDO, blank=True, help_text='Como fue adquirido el ejemplar')
 
     ESTADO = (
         ('disponible', 'Disponible'),

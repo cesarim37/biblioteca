@@ -26,7 +26,7 @@ Listado de Libros
         <thead>
           <tr>
             <th>Inventario</th>
-            <th>Titulo</th>
+            <th>Título</th>
             <th>Autor</th>
             <th>Acciones</th>
           </tr>
@@ -35,15 +35,16 @@ Listado de Libros
           {% for libro in libros %}
           <tr>
             <td>{{ libro.ejemplar_libro.all|length }}</td>
-            <td> <a href="{% url 'catalog:libro_detail' slug=libro.slug pk=libro.pk %}">{{ libro.titulo }}</a> </td>
+            <td>{{ libro.titulo }}</td>
             <td>
               {% for autor in libro.autor.all %}
               <li>{{ autor }}</li>
               {% endfor %}
             </td>
             <td>
-              <a href="{% url 'catalog:editar_libro' libro.id %}" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o"></i></a>
-              <a href="{% url 'catalog:eliminar_libro' libro.id %}" class="btn btn-outline-primary"><i class="fa fa-trash-o"></i></a>
+              <a href="{% url 'catalog:libro_detail' slug=libro.slug pk=libro.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Ver detalles"><i class="fa fa-search"></i></a>
+              <a href="{% url 'catalog:editar_libro' libro.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+              <a href="{% url 'catalog:eliminar_libro' libro.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fa fa-trash-o"></i></a>
             </td>
           </tr>
           {% endfor %}
@@ -73,4 +74,9 @@ Listado de Libros
 <script src="{% static 'assets/js/dist_lib/data-table/buttons.colVis.min.js' %}"></script>
 <script src="{% static 'assets/js/init/datatables-init.js' %}"></script>
 
+<script>
+  function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  };
+</script>
 {% endblock %}

@@ -36,9 +36,9 @@ Detalle Usuario
         <thead>
           <tr>
             <th>Ejemplar</th>
-            <th>Tipo de prestamo</th>
-            <th>fecha de prestamo</th>
-            <th>fecha de devolucion</th>
+            <th>Tipo de préstamo</th>
+            <th>fecha de préstamo</th>
+            <th>fecha de devolución</th>
             <th>Devolver</th>
           </tr>
         </thead>
@@ -63,7 +63,7 @@ Detalle Usuario
       {% endif %}
     </div>
   </div>
-  <a href="{% url 'loan:nuevo_prestamo' pk=object.pk slug=object.slug %}" class="btn btn-primary">Agregar prestamo</a>
+  <a href="{% url 'loan:nuevo_prestamo' pk=object.pk slug=object.slug %}" class="btn btn-primary">Agregar préstamo</a>
 </div>
 
 {% endblock %}

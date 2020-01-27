@@ -13,15 +13,15 @@ Nuevo Estudiante
 <div class="col-xs-12 offset-sm-3 col-sm-6">
   <div class="card">
     <div class="card-header">
-      <strong>Formulario de Registro</strong>
+      <strong>Formulario de {{ title }}</strong>
     </div>
     <div class="card-body card-block">
 
       <form action="" method="POST">
         {% csrf_token %}
 
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Guardar</button>
+          {{ form.as_p }}
+          <button class="btn btn-primary" type="submit">Guardar</button>
       </form>
     </div>
   </div>
