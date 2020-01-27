@@ -15,33 +15,58 @@ class EstudianteForm(forms.Form):
         label='Nombre',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     last_name = forms.CharField(
         label='Apellido',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
         min_length=7,
         max_length=12,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     grado = forms.CharField(
         label='Grado',
         max_length=20,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     seccion = forms.CharField(
         label='Sección',
         max_length=20,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     TURNO = (
@@ -51,7 +76,13 @@ class EstudianteForm(forms.Form):
     turno = forms.CharField(
         label='Turno',
         max_length=20,
-        widget=forms.Select(choices=TURNO),
+        widget=forms.Select(
+            choices=TURNO,
+            attrs={
+                    'class': 'form-control standardSelect',
+                    'data-placeholder': 'Selecciona tipo de prestamo...',
+                }
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -144,21 +175,36 @@ class PersonalForm(forms.Form):
         label='Nombre',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     last_name = forms.CharField(
         label='Apellido',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
         min_length=7,
         max_length=12,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     TIPO = (
@@ -169,7 +215,13 @@ class PersonalForm(forms.Form):
     tipo = forms.CharField(
         label='Tipo',
         max_length=20,
-        widget=forms.Select(choices=TIPO),
+        widget=forms.Select(
+            choices=TIPO,
+            attrs={
+                    'class': 'form-control standardSelect',
+                    'data-placeholder': 'Selecciona tipo de prestamo...',
+                }
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -255,33 +307,58 @@ class VisitanteForm(forms.Form):
         label='Nombre',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     last_name = forms.CharField(
         label='Apellido',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
         min_length=7,
         max_length=12,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     direccion = forms.CharField(
         label='Dirección',
         max_length=200,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     telefono = forms.CharField(
         label='Teléfono',
         max_length=20,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -371,58 +448,100 @@ class BibliotecarioForm(forms.Form):
         label='Nombre',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     last_name = forms.CharField(
         label='Apellido',
         min_length=2,
         max_length=50,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
         min_length=7,
         max_length=12,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     email = forms.CharField(
         label='E-mail',
         min_length=6,
         max_length=70,
-        widget=forms.EmailInput(),
-        required=True
+        required=True,
+        widget=forms.EmailInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
     password = forms.CharField(
         label='Contraseña',
         max_length=70,
-        widget=forms.PasswordInput(),
-        required=True
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
     password_confirmation = forms.CharField(
         label='Confirmar contraseña',
         max_length=70,
-        widget=forms.PasswordInput(),
-        required=True
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     imagen = forms.ImageField(
         label='Imagen de Perfil',
-        required=False
+        required=False,
+        widget=forms.FileInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     direccion = forms.CharField(
         label='Dirección',
         max_length=200,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     telefono = forms.CharField(
         label='Teléfono',
         max_length=20,
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                    'class': 'form-control',
+                }
+        ),
     )
 
     def __init__(self, *args, **kwargs):
