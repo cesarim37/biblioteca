@@ -27,8 +27,8 @@ class EstudianteForm(forms.Form):
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
-        min_length=2,
-        max_length=20,
+        min_length=7,
+        max_length=12,
         required=True
     )
 
@@ -88,7 +88,7 @@ class EstudianteForm(forms.Form):
             cedula_identidad=cedula_identidad).exists()
         if cedula_existente:
             raise forms.ValidationError(
-                'Tu cedula se encuentra registrada. Verifica los datos')
+                'Tu cédula se encuentra registrada. Verifica los datos')
         return data
 
     def save(self):
@@ -97,8 +97,17 @@ class EstudianteForm(forms.Form):
         estudiante = self.pre_user
 
         if estudiante is not None:
+            print(estudiante)
+            estudiante.perfil.usuario.username = data_cleaned['cedula_identidad']
             estudiante.perfil.usuario.first_name = data_cleaned['first_name']
+            estudiante.perfil.usuario.last_name = data_cleaned['last_name']
             estudiante.perfil.usuario.save()
+            estudiante.perfil.cedula_identidad = data_cleaned['cedula_identidad']
+            estudiante.perfil.save()
+            estudiante.grado = data_cleaned['grado']
+            estudiante.seccion = data_cleaned['seccion']
+            estudiante.turno = data_cleaned['turno']
+            estudiante.save()
         else:
             first_name = data_cleaned['first_name']
             last_name = data_cleaned['last_name']
@@ -147,8 +156,8 @@ class PersonalForm(forms.Form):
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
-        min_length=2,
-        max_length=20,
+        min_length=7,
+        max_length=12,
         required=True
     )
 
@@ -165,47 +174,79 @@ class PersonalForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(PersonalForm, self).__init__(*args, **kwargs)
+        inicial = kwargs.get('initial', None)
+
+        if inicial:
+            personal = inicial['personal']
+
+            self.fields['first_name'].initial = personal.perfil.usuario.\
+                first_name
+            self.fields['last_name'].initial = personal.perfil.usuario.\
+                last_name
+            self.fields['cedula_identidad'].initial = personal.perfil.\
+                cedula_identidad
+            self.fields['tipo'].initial = personal.tipo
+            self.pre_user = personal
+        else:
+            self.pre_user = None
 
     def clean(self):
         """Cedula debe ser unica."""
         data = super().clean()
+        if self.pre_user:
+            pre_ci = self.pre_user.perfil.cedula_identidad
+            ci = self.cleaned_data['cedula_identidad']
+
+            if pre_ci == ci:
+                return data
 
         cedula_identidad = self.cleaned_data['cedula_identidad']
         cedula_existente = Perfil.objects.filter(
             cedula_identidad=cedula_identidad).exists()
-
         if cedula_existente:
             raise forms.ValidationError(
-                'Tu cedula se encuentra registrada. Verifica los datos')
+                'Tu cédula se encuentra registrada. Verifica los datos')
         return data
 
     def save(self):
         # Creando usuario y perfil
 
-        data = self.cleaned_data
+        data_cleaned = self.cleaned_data
+        personal = self.pre_user
 
-        first_name = data['first_name']
-        last_name = data['last_name']
-        cedula_identidad = data['cedula_identidad']
-        tipo = data['tipo']
-        user = User.objects.create_user(
-            username=cedula_identidad,
-            first_name=first_name,
-            last_name=last_name
-        )
+        if personal is not None:
+            personal.perfil.usuario.username = data_cleaned['cedula_identidad']
+            personal.perfil.usuario.first_name = data_cleaned['first_name']
+            personal.perfil.usuario.last_name = data_cleaned['last_name']
+            personal.perfil.usuario.save()
+            personal.perfil.cedula_identidad = data_cleaned['cedula_identidad']
+            personal.perfil.save()
+            personal.tipo = data_cleaned['tipo']
+            personal.save()
+        else:
+            first_name = data_cleaned['first_name']
+            last_name = data_cleaned['last_name']
+            cedula_identidad = data_cleaned['cedula_identidad']
+            tipo = data_cleaned['tipo']
 
-        perfil = Perfil(
-            usuario=user,
-            tipo_usuario='personal',
-            cedula_identidad=cedula_identidad
-        )
-        perfil.save()
+            user = User.objects.create_user(
+                username=cedula_identidad,
+                first_name=first_name,
+                last_name=last_name
+            )
 
-        personal = Personal(
-            perfil=perfil,
-            tipo=tipo
-        )
-        personal.save()
+            perfil = Perfil(
+                usuario=user,
+                tipo_usuario='personal',
+                cedula_identidad=cedula_identidad
+            )
+            perfil.save()
+
+            personal = Personal(
+                perfil=perfil,
+                tipo=tipo
+            )
+            personal.save()
 
 
 class VisitanteForm(forms.Form):
@@ -226,8 +267,8 @@ class VisitanteForm(forms.Form):
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
-        min_length=2,
-        max_length=20,
+        min_length=7,
+        max_length=12,
         required=True
     )
 
@@ -238,56 +279,90 @@ class VisitanteForm(forms.Form):
     )
 
     telefono = forms.CharField(
-        label='Telefono',
+        label='Teléfono',
         max_length=20,
         required=True
     )
 
     def __init__(self, *args, **kwargs):
         super(VisitanteForm, self).__init__(*args, **kwargs)
+        inicial = kwargs.get('initial', None)
+
+        if inicial:
+            visitante = inicial['visitante']
+
+            self.fields['first_name'].initial = visitante.perfil.usuario.\
+                first_name
+            self.fields['last_name'].initial = visitante.perfil.usuario.\
+                last_name
+            self.fields['cedula_identidad'].initial = visitante.perfil.\
+                cedula_identidad
+            self.fields['direccion'].initial = visitante.direccion
+            self.fields['telefono'].initial = visitante.telefono
+            self.pre_user = visitante
+        else:
+            self.pre_user = None
 
     def clean(self):
         """Cedula debe ser unica."""
         data = super().clean()
+        if self.pre_user:
+            pre_ci = self.pre_user.perfil.cedula_identidad
+            ci = self.cleaned_data['cedula_identidad']
+
+            if pre_ci == ci:
+                return data
 
         cedula_identidad = self.cleaned_data['cedula_identidad']
         cedula_existente = Perfil.objects.filter(
             cedula_identidad=cedula_identidad).exists()
-
         if cedula_existente:
             raise forms.ValidationError(
-                'Tu cedula se encuentra registrada. Verifica los datos')
+                'Tu cédula se encuentra registrada. Verifica los datos')
         return data
 
     def save(self):
         # Creando usuario y perfil
 
-        data = self.cleaned_data
+        data_cleaned = self.cleaned_data
+        visitante = self.pre_user
 
-        first_name = data['first_name']
-        last_name = data['last_name']
-        cedula_identidad = data['cedula_identidad']
-        direccion = data['direccion']
-        telefono = data['telefono']
-        user = User.objects.create_user(
-            username=cedula_identidad,
-            first_name=first_name,
-            last_name=last_name
-        )
+        if visitante is not None:
+            visitante.perfil.usuario.username = data_cleaned['cedula_identidad']
+            visitante.perfil.usuario.first_name = data_cleaned['first_name']
+            visitante.perfil.usuario.last_name = data_cleaned['last_name']
+            visitante.perfil.usuario.save()
+            visitante.perfil.cedula_identidad = data_cleaned['cedula_identidad']
+            visitante.perfil.save()
+            visitante.direccion = data_cleaned['direccion']
+            visitante.telefono = data_cleaned['telefono']
+            visitante.save()
+        else:
+            first_name = data['first_name']
+            last_name = data['last_name']
+            cedula_identidad = data['cedula_identidad']
+            direccion = data['direccion']
+            telefono = data['telefono']
 
-        perfil = Perfil(
-            usuario=user,
-            tipo_usuario='visitante',
-            cedula_identidad=cedula_identidad
-        )
-        perfil.save()
+            user = User.objects.create_user(
+                username=cedula_identidad,
+                first_name=first_name,
+                last_name=last_name
+            )
 
-        visitante = Visitante(
-            perfil=perfil,
-            direccion=direccion,
-            telefono=telefono
-        )
-        visitante.save()
+            perfil = Perfil(
+                usuario=user,
+                tipo_usuario='visitante',
+                cedula_identidad=cedula_identidad
+            )
+            perfil.save()
+
+            visitante = Visitante(
+                perfil=perfil,
+                direccion=direccion,
+                telefono=telefono
+            )
+            visitante.save()
 
 
 class BibliotecarioForm(forms.Form):
@@ -308,8 +383,8 @@ class BibliotecarioForm(forms.Form):
 
     cedula_identidad = forms.CharField(
         label='Cédula de Identidad',
-        min_length=2,
-        max_length=20,
+        min_length=7,
+        max_length=12,
         required=True
     )
 
@@ -345,7 +420,7 @@ class BibliotecarioForm(forms.Form):
     )
 
     telefono = forms.CharField(
-        label='Telefono',
+        label='Teléfono',
         max_length=20,
         required=True
     )
@@ -363,17 +438,13 @@ class BibliotecarioForm(forms.Form):
 
         if cedula_existente:
             raise forms.ValidationError(
-                'Tu cedula se encuentra registrada. Verifica los datos')
+                'Tu cédula se encuentra registrada. Verifica los datos')
 
         password = data['password']
         password_confirmation = data['password_confirmation']
 
         if password != password_confirmation:
             raise forms.ValidationError('La contraseña no coincide')
-
-        print('------------')
-        print('paso contraseña!!')
-        print('------------')
         return data
 
     def clean_email(self):
@@ -382,10 +453,7 @@ class BibliotecarioForm(forms.Form):
         email_taken = User.objects.filter(email=email).exists()
         if email_taken:
             raise forms.ValidationError(
-                'El email ya se esta en uso. Prueba otro!')
-        print('------------')
-        print('paso!!')
-        print('------------')
+                'El email ya se encuentra en uso. Prueba otro!')
         return email
 
     def save(self):
@@ -429,6 +497,8 @@ class BibliotecarioForm(forms.Form):
 class LoginForm(forms.Form):
     cedula = forms.CharField(
         label='Cedula',
+        min_length=7,
+        max_length=12,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control',

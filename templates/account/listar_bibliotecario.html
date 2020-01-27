@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block titulo %}
+Listado de Bibliotecarios
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'assets/css/dist_lib/datatable/dataTables.bootstrap.min.css' %}">
+  <style type="text/css">
+  </style>
+{% endblock %}
+
+{% block content %}
+
+{% if perfiles %}
+
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <strong class="card-title">Listado de Bibliotecarios</strong>
+    </div>
+    <div class="card-body">
+      <table id="bootstrap-data-table" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Cedula</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for perfil in perfiles %}
+            <tr>
+              <td>{{ perfil.usuario.first_name }}</td>
+              <td>{{ perfil.usuario.last_name }}</td>
+              <td> <a href="{% url 'account:perfil_detail' slug=perfil.slug pk=perfil.pk %}">{{ perfil.cedula_identidad }}</a> </td>
+              <td>                
+                <a href="#" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o"></i></a>                
+                <a href="#" class="btn btn-outline-primary"><i class="fa fa-trash-o"></i></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<h3>No existen bibliotecarios registrados</h3>
+{% endif %}
+
+{% endblock %}
+
+{% block js %}
+
+<script src="{% static 'assets/js/dist_lib/data-table/datatables.min.js' %}"></script>
+
+<script src="{% static 'assets/js/dist_lib/data-table/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/buttons.bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/jszip.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/vfs_fonts.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/buttons.html5.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/buttons.print.min.js' %}"></script>
+<script src="{% static 'assets/js/dist_lib/data-table/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'assets/js/init/datatables-init.js' %}"></script>
+
+{% endblock %}

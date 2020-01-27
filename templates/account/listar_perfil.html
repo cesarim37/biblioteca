@@ -27,7 +27,7 @@ Listado de Usuarios
           <tr>
             <th>Nombres</th>
             <th>Apellidos</th>
-            <th>Cedula</th>
+            <th>Cédula</th>
             <th>Tipo de usuario</th>
             <th>Acciones</th>
           </tr>
@@ -37,11 +37,30 @@ Listado de Usuarios
             <tr>
               <td>{{ perfil.usuario.first_name }}</td>
               <td>{{ perfil.usuario.last_name }}</td>
-              <td> <a href="{% url 'account:perfil_detail' slug=perfil.slug pk=perfil.pk %}">{{ perfil.cedula_identidad }}</a> </td>
-              <td>{{ perfil.tipo_usuario }}</td>
+              <td>{{ perfil.cedula_identidad }}</td>
               <td>
-                <a href="#" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o"></i></a>
-                <a href="#" class="btn btn-outline-primary"><i class="fa fa-trash-o"></i></a>
+                {%if perfil.tipo_usuario == 'estudiante' %}
+                  {{ perfil.tipo_usuario }}
+                {% endif %}
+                {%if perfil.tipo_usuario == 'personal' %}
+                  {{ perfil.tipo_usuario }}
+                {% endif %}
+                {%if perfil.tipo_usuario == 'visitante' %}
+                  {{ perfil.tipo_usuario }}
+                {% endif %}
+              </td>
+              <td>
+                <a href="{% url 'account:perfil_detail' slug=perfil.slug pk=perfil.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Ver detalles"><i class="fa fa-search"></i></a>
+                {%if perfil.tipo_usuario == 'estudiante' %}
+                  <a href="{% url 'account:editar_estudiante' pk=perfil.estudiante_perfil.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+                {% endif %}
+                {%if perfil.tipo_usuario == 'personal' %}
+                  <a href="{% url 'account:editar_personal' pk=perfil.personal_perfil.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+                {% endif %}
+                {%if perfil.tipo_usuario == 'visitante' %}
+                  <a href="{% url 'account:editar_visitante' pk=perfil.visitante_perfil.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+                {% endif %}
+                <a href="{% url 'account:eliminar_perfil' pk=perfil.pk %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fa fa-trash-o"></i></a>
               </td>
             </tr>
           {% endfor %}
@@ -52,7 +71,7 @@ Listado de Usuarios
 </div>
 
 {% else %}
-<h3>No existen libros registrados</h3>
+<h3>No existen usuarios registrados</h3>
 {% endif %}
 
 {% endblock %}

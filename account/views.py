@@ -1,100 +1,185 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, views as auth_views,\
     login as auth_login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import View, DetailView, ListView, FormView
+from django.views.generic import View, DetailView, ListView, FormView, DeleteView
+
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 from account.forms import EstudianteForm, PersonalForm, VisitanteForm,\
     BibliotecarioForm, LoginForm
-from account.models import Perfil, Estudiante
+from account.models import Perfil, Estudiante, Personal, Visitante
 
 
-class CrearEstudianteView(LoginRequiredMixin, FormView):
-
-    template_name = 'account/crear_estudiante.html'
-    form_class = EstudianteForm
-    success_url = reverse_lazy('catalog:home')
-
-    def form_valid(self, form):
-        """Save form data."""
-        form.save()
-        return super().form_valid(form)
-
-
-class ActualizarEstudianteView(LoginRequiredMixin, View):
-    def get(self, request, pk, *args, **kwargs):
-        estudiante_form = EstudianteForm(initial={
-            'estudiante': get_object_or_404(Estudiante, pk=pk),
-            'update': False
-        })
-
-        return render(request, 'account/crear_estudiante.html', {
-            'form': estudiante_form,
-        })
-
-    def post(self, request, pk, *args, **kwargs):
-        estudiante_form = EstudianteForm(request.POST, initial={
-            'estudiante': get_object_or_404(Estudiante, pk=pk),
-            'update': True
-        })
-
-        if estudiante_form.is_valid():
-            estudiante_form.save()
-        else:
-            return render(request, 'account/crear_estudiante.html', {
-                'form': estudiante_form,
-            })
-
-        return redirect('catalog:home')
-
-
-class CrearPersonalView(LoginRequiredMixin, FormView):
-
-    template_name = 'account/crear_personal.html'
-    form_class = PersonalForm
-    success_url = reverse_lazy('catalog:home')
-
-    def form_valid(self, form):
-        """Save form data."""
-        form.save()
-        return super().form_valid(form)
-
-
-class CrearVisitanteView(LoginRequiredMixin, FormView):
-
-    template_name = 'account/crear_visitante.html'
-    form_class = VisitanteForm
-    success_url = reverse_lazy('catalog:home')
-
-    def form_valid(self, form):
-        """Save form data."""
-        form.save()
-        return super().form_valid(form)
-
-
-class CrearBibliotecarioView(LoginRequiredMixin, FormView):
-
-    template_name = 'account/crear_bibliotecario.html'
-    form_class = BibliotecarioForm
-    success_url = reverse_lazy('catalog:home')
-
-    def form_valid(self, form):
-        """Save form data."""
-        form.save()
-        return super().form_valid(form)
-
-
-class ListadoPerfilView(LoginRequiredMixin, ListView):
+class ListadoPerfilView(ListView):
+    
     model = Perfil
     template_name = 'account/listar_perfil.html'
     context_object_name = 'perfiles'
-    queryset = Perfil.objects.filter(status=True)
+    queryset = Perfil.objects.filter(status=True).exclude(tipo_usuario='bibliotecario')
 
 
-class PerfilDetailView(LoginRequiredMixin, DetailView):
+class CrearEstudianteView(FormView):
+
+    template_name = 'account/crear_estudiante.html'
+    form_class = EstudianteForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Registro'}
+
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
+
+
+class ActualizarEstudianteView(FormView):
+
+    template_name = 'account/crear_estudiante.html'
+    form_class = EstudianteForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Actualización'}
+
+    def get_initial(self):
+        
+        initial = super(ActualizarEstudianteView, self).get_initial()
+        print(self.kwargs)
+        initial.update({'estudiante': get_object_or_404(Estudiante, pk=self.kwargs['pk'])})
+        return initial
+
+    def form_valid(self, form):
+
+        form.save()
+        return super().form_valid(form)
+
+
+# class ActualizarEstudianteView(View):
+#     def get(self, request, pk, *args, **kwargs):
+#         estudiante_form = EstudianteForm(initial={
+#             'estudiante': get_object_or_404(Estudiante, pk=pk),
+#             'update': False
+#         })
+
+#         return render(request, 'account/crear_estudiante.html', {
+#             'form': estudiante_form,
+#         })
+
+#     def post(self, request, pk, *args, **kwargs):
+#         estudiante_form = EstudianteForm(request.POST, initial={
+#             'estudiante': get_object_or_404(Estudiante, pk=pk),
+#             'update': True
+#         })
+
+#         if estudiante_form.is_valid():
+#             estudiante_form.save()
+#         else:
+#             return render(request, 'account/crear_estudiante.html', {
+#                 'form': estudiante_form,
+#             })
+
+#         return redirect('catalog:home')
+
+
+class CrearPersonalView(FormView):
+
+    template_name = 'account/crear_personal.html'
+    form_class = PersonalForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Registro'}
+
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
+
+
+class ActualizarPersonalView(FormView):
+
+    template_name = 'account/crear_personal.html'
+    form_class = PersonalForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Actualización'}
+
+    def get_initial(self):
+        
+        initial = super(ActualizarPersonalView, self).get_initial()
+        print(self.kwargs)
+        initial.update({'personal': get_object_or_404(Personal, pk=self.kwargs['pk'])})
+        return initial
+
+    def form_valid(self, form):
+
+        form.save()
+        return super().form_valid(form)
+
+
+class CrearVisitanteView(FormView):
+
+    template_name = 'account/crear_visitante.html'
+    form_class = VisitanteForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Registro'}
+
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
+
+
+class ActualizarVisitanteView(FormView):
+
+    template_name = 'account/crear_visitante.html'
+    form_class = VisitanteForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Actualización'}
+
+    def get_initial(self):
+        
+        initial = super(ActualizarVisitanteView, self).get_initial()
+        print(self.kwargs)
+        initial.update({'visitante': get_object_or_404(Visitante, pk=self.kwargs['pk'])})
+        return initial
+
+    def form_valid(self, form):
+
+        form.save()
+        return super().form_valid(form)
+
+
+class CrearBibliotecarioView(FormView):
+
+    template_name = 'account/crear_bibliotecario.html'
+    form_class = BibliotecarioForm
+    success_url = reverse_lazy('account:listar_perfil')
+    extra_context = {'title': 'Registro'}
+
+    def form_valid(self, form):
+        """Save form data."""
+        form.save()
+        return super().form_valid(form)
+
+
+class ListadoBibliotecarioView(ListView):
+    model = Perfil
+    template_name = 'account/listar_bibliotecario.html'
+    context_object_name = 'perfiles'
+    queryset = Perfil.objects.filter(status=True,tipo_usuario='bibliotecario')
+
+
+class EliminarPerfilView(DeleteView):
+    model = Perfil
+    template_name = 'account/perfil_confirm_delete.html'
+
+    def post(self,request,pk,*args,**kwargs):
+        object = Perfil.objects.get(id=pk)
+        object.status = False
+        object.save()
+        return redirect('account:listar_perfil')
+
+
+class PerfilDetailView(DetailView):
     model = Perfil
 
 
@@ -129,7 +214,7 @@ class LoginView(auth_views.LoginView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+class LogoutView(auth_views.LogoutView):
     """Logout view."""
 
     template_name = 'registration/logout.html'

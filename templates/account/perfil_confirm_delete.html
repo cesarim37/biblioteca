@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo %}
-Nuevo Visitante
+Confirmacion eliminar perfil
 {% endblock %}
 
 {% block css %}
@@ -13,19 +13,17 @@ Nuevo Visitante
 <div class="col-xs-12 offset-sm-3 col-sm-6">
   <div class="card">
     <div class="card-header">
-      <strong>Formulario de {{ title }}</strong>
+      <strong>Eliminar </strong>
     </div>
     <div class="card-body card-block">
 
       <form action="" method="POST">
         {% csrf_token %}
-
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Guardar</button>
+          <p><strong>¿Desea eliminar el registro {{ object }}?</strong></p>
+          <button type="submit" class="btn btn-danger">Confirmar</button>
       </form>
     </div>
   </div>
 </div>
-
 
 {% endblock %}
