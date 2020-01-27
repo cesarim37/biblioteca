@@ -39,8 +39,8 @@ Listado de Editoriales
               {% endfor %}
             </td>
             <td>
-              <a href="{% url 'catalog:editar_editorial' editorial.id %}" class="btn btn-outline-primary"><i class="fa fa-pencil-square-o"></i></a>
-              <a href="{% url 'catalog:eliminar_editorial' editorial.id %}" class="btn btn-outline-primary"><i class="fa fa-trash-o"></i></a>
+              <a href="{% url 'catalog:editar_editorial' editorial.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Editar"><i class="fa fa-pencil-square-o"></i></a>
+              <a href="{% url 'catalog:eliminar_editorial' editorial.id %}" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Eliminar"><i class="fa fa-trash-o"></i></a>
             </td>
           </tr>
           {% endfor %}
@@ -70,4 +70,9 @@ Listado de Editoriales
 <script src="{% static 'assets/js/dist_lib/data-table/buttons.colVis.min.js' %}"></script>
 <script src="{% static 'assets/js/init/datatables-init.js' %}"></script>
 
+<script>
+  function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  };
+</script>
 {% endblock %}

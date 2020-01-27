@@ -29,8 +29,8 @@
   </title>
 
   <style type="text/css">
-    .header-menu{
-      margin-top: 5px;
+    .header-left{
+      margin-top: 15px;
     }
     .right-panel header.header{
       height: 70px;
@@ -67,11 +67,11 @@
           </li>
           <li class="menu-title">Biblioteca</li><!-- /.menu-title -->
           <li class="menu-item-has-children dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-file-text-o"></i>Prestamos</a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-file-text-o"></i>Gestión de Préstamos</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-plus"></i><a href="{% url 'loan:crear_prestamo' %}">Prestamo Libros</a></li>
+              <li><i class="fa fa-plus"></i><a href="{% url 'loan:crear_prestamo' %}">Préstamo Libros</a></li>
               <li><i class="fa fa-reply"></i><a href="{% url 'loan:devolucion' %}">Devolución Libros</a></li>
-              <li><i class="fa fa-plus"></i><a href="{% url 'loan:crear_prestamo_material' %}">Prestamo Material</a></li>
+              <li><i class="fa fa-plus"></i><a href="{% url 'loan:crear_prestamo_material' %}">Préstamo Material</a></li>
               <li><i class="fa fa-reply"></i><a href="{% url 'loan:devolucion_material' %}">Devolución Material</a></li>
             </ul>
           </li>
@@ -98,11 +98,11 @@
           <li class="menu-item-has-children dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
             <ul class="sub-menu children dropdown-menu">
-              <li><i class="fa fa-pencil"></i><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_estudiante' %}">Registrar Estudiante</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_personal' %}">Registrar Personal</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_visitante' %}">Registrar Visitante</a></li>
-              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:crear_bibliotecario' %}">Registrar Bibliotecario</a></li>
+              <li><i class="fa fa-list-ul"></i><a href="{% url 'account:listar_perfil' %}">Listado de usuarios</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_estudiante' %}">Registrar Estudiante</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_personal' %}">Registrar Personal</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_visitante' %}">Registrar Visitante</a></li>
+              <li><i class="fa fa-pencil"></i><a href="{% url 'account:crear_bibliotecario' %}">Registrar Bibliotecario</a></li>
             </ul>
           </li>
           <li class="menu-item-has-children dropdown">
@@ -126,7 +126,7 @@
     <header id="header" class="header">
       <div class="top-left">
         <div class="navbar-header">
-          <a class="navbar-brand" href="./">
+          <a class="navbar-brand" href="{% url 'catalog:home' %}">
             <div class="images">
               <img src="{% static 'images/mpppe.png' %}" alt="Logo-mpppe" class="logo-mpppe">
               <img src="{% static 'images/logo.png' %}" alt="Logo-escuela" class="logo-escuela">
@@ -145,9 +145,9 @@
               </a>
 
               <div class="user-menu dropdown-menu">
-                <a class="nav-link" href=""><i class="fa fa-cog"></i>Ultima Conexión</a>
+                <a class="nav-link" href=""><i class="fa fa-cog"></i>Última Conexión</a>
                 <a class="nav-link" href="">{{ user.last_login  }}</a>
-                <a class="nav-link" href="{% url 'account:logout' %}"><i class="fa fa-power-off"></i>Logout</a>
+                <a class="nav-link" href="{% url 'account:logout' %}"><i class="fa fa-power-off"></i>Cerrar sesión</a>
               </div>
             </div>
           </div>

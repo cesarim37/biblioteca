@@ -107,24 +107,10 @@
           <div class="col-xs-12 offset-sm-3 col-sm-6">
             <div class="card">
               <div class="card-header">
-                <strong>Iniciar sección</strong>
+                <strong>Lo sentimos</strong>
               </div>
               <div class="card-body card-block">
-
-                <form method="POST" action="">
-                  {% csrf_token %}
-
-                  {% if form.errors %}
-                  <div class="alert alert-danger">
-                    Tu Usuario y/o Contrasea no coinciden.
-                  </div>
-                  {% endif%}
-
-                  {{ form.as_p}}
-
-                  <button class="btn btn-primary btn-block" type="submit">Ingresar</button>
-
-                </form>
+                <h4>No tienes permisos para acceder a esta vista</h4>
               </div>
             </div>
           </div>
