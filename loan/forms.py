@@ -32,9 +32,9 @@ class PrestamoForm(forms.Form):
     )
 
     lector = forms.CharField(
-        label='Cedula del Lector',
-        min_length=2,
-        max_length=20,
+        label='Cédula del Lector',
+        min_length=7,
+        max_length=12,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -49,7 +49,7 @@ class PrestamoForm(forms.Form):
         ('hogar', 'Hogar'),
     )
     tipo_prestamo = forms.CharField(
-        label='Tipo de prestamo',
+        label='Tipo de préstamo',
         max_length=20, 
         widget=forms.Select(
             choices=TIPO_PRESTAMO,
@@ -85,7 +85,7 @@ class PrestamoForm(forms.Form):
             perfil = Perfil.objects.get(cedula_identidad=lector)
             prestamos = perfil.prestamo_user.filter(fecha_devuelto=None)
         except:
-            raise forms.ValidationError('El usuario no existe, verifique la cedula')
+            raise forms.ValidationError('El usuario no existe, verifique la cédula')
 
         if perfil.tipo_usuario == 'estudiante' and len(prestamos)>0:
             raise forms.ValidationError('El usuario tiene libros pendientes')
@@ -95,7 +95,7 @@ class PrestamoForm(forms.Form):
 
         tipo_prestamo = self.cleaned_data['tipo_prestamo']
         if perfil.tipo_usuario == 'visitante' and tipo_prestamo != 'sala' :
-            raise forms.ValidationError('Usuario Visitante, prestamo restringido a sala')
+            raise forms.ValidationError('Usuario Visitante, préstamo restringido a sala')
 
         ejemplar = self.cleaned_data['ejemplar']
         try:
@@ -126,6 +126,22 @@ class DevolucionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(DevolucionForm, self).__init__(*args, **kwargs)
 
+    def clean(self):
+        """Cedula debe ser unica."""
+        data = super().clean()
+
+        cota = self.cleaned_data['ejemplar']
+        try:
+            ejemplar = EjemplarLibro.objects.get(cota=cota)
+        except:
+            raise forms.ValidationError('El ejemplar no existe, verifique la cota')
+
+        try:
+            devolucion = Prestamo.objects.get(ejemplar=ejemplar, fecha_devuelto=None)
+        except:
+            raise forms.ValidationError('Préstamo no registrado, verifique la cota')
+
+        return data
 
 class NuevoPrestamoForm(forms.ModelForm):
     ejemplar = forms.ModelChoiceField(
@@ -151,7 +167,7 @@ class NuevoPrestamoForm(forms.ModelForm):
             'tipo_prestamo': forms.Select(
                 attrs={
                     'class': 'form-control standardSelect',
-                    'data-placeholder': 'Selecciona tipo de prestamo...',
+                    'data-placeholder': 'Selecciona tipo de préstamo...',
                 }),
 
             'fecha_prestamo': forms.DateInput(
@@ -184,9 +200,9 @@ class PrestamoMaterialForm(forms.Form):
     )
 
     lector = forms.CharField(
-        label='Cedula del Usuario',
-        min_length=2,
-        max_length=20,
+        label='Cédula del Usuario',
+        min_length=7,
+        max_length=12,
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -201,13 +217,13 @@ class PrestamoMaterialForm(forms.Form):
         ('hogar', 'Hogar'),
     )
     tipo_prestamo = forms.CharField(
-        label='Tipo de prestamo',
+        label='Tipo de préstamo',
         max_length=20, 
         widget=forms.Select(
             choices=TIPO_PRESTAMO,
             attrs={
                     'class': 'form-control standardSelect',
-                    'data-placeholder': 'Selecciona tipo de prestamo...',
+                    'data-placeholder': 'Selecciona tipo de préstamo...',
                 }
         ),
     )
@@ -237,7 +253,7 @@ class PrestamoMaterialForm(forms.Form):
             perfil = Perfil.objects.get(cedula_identidad=lector)
             prestamos = perfil.prestamo_user.filter(fecha_devuelto=None)
         except:
-            raise forms.ValidationError('El usuario no existe, verifique la cedula')
+            raise forms.ValidationError('El usuario no existe, verifique la cédula')
 
         if perfil.tipo_usuario == 'estudiante' and len(prestamos)>0:
             raise forms.ValidationError('El usuario tiene libros pendientes')
@@ -247,7 +263,7 @@ class PrestamoMaterialForm(forms.Form):
 
         tipo_prestamo = self.cleaned_data['tipo_prestamo']
         if perfil.tipo_usuario == 'visitante' and tipo_prestamo != 'sala' :
-            raise forms.ValidationError('Usuario Visitante, prestamo restringido a sala')
+            raise forms.ValidationError('Usuario Visitante, préstamo restringido a sala')
 
         ejemplar_material = self.cleaned_data['ejemplar_material']
         if ejemplar_material.condicion == 'dañado':
