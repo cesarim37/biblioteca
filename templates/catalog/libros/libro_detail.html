@@ -82,7 +82,7 @@ Detalle Libro
       {% endif %}
     </div>
   </div>
-  <a href="{% url 'catalog:crear_ejemplar' %}" class="btn btn-primary">Agregar ejemplar</a>
+  <a href="{% url 'catalog:crear_ejemplar' pk=object.pk %}" class="btn btn-primary">Agregar ejemplar</a>
 </div>
 
 {% endblock %}
